@@ -1,0 +1,216 @@
+{
+  'metadata': {
+    'SECID': {
+      'type': 'string',
+      'bytes': 36,
+      'max_size': 0
+    },
+    'BOARDID': {
+      'type': 'string',
+      'bytes': 12,
+      'max_size': 0
+    },
+    'SHORTNAME': {
+      'type': 'string',
+      'bytes': 30,
+      'max_size': 0
+    },
+    'PREVPRICE': {
+      'type': 'double'
+    },
+    'LOTSIZE': {
+      'type': 'int32'
+    },
+    'FACEVALUE': {
+      'type': 'double'
+    },
+    'STATUS': {
+      'type': 'string',
+      'bytes': 3,
+      'max_size': 0
+    },
+    'BOARDNAME': {
+      'type': 'string',
+      'bytes': 381,
+      'max_size': 0
+    },
+    'DECIMALS': {
+      'type': 'int32'
+    },
+    'SECNAME': {
+      'type': 'string',
+      'bytes': 90,
+      'max_size': 0
+    },
+    'REMARKS': {
+      'type': 'string',
+      'bytes': 24,
+      'max_size': 0
+    },
+    'MARKETCODE': {
+      'type': 'string',
+      'bytes': 12,
+      'max_size': 0
+    },
+    'INSTRID': {
+      'type': 'string',
+      'bytes': 12,
+      'max_size': 0
+    },
+    'SECTORID': {
+      'type': 'string',
+      'bytes': 12,
+      'max_size': 0
+    },
+    'MINSTEP': {
+      'type': 'double'
+    },
+    'PREVWAPRICE': {
+      'type': 'double'
+    },
+    'FACEUNIT': {
+      'type': 'string',
+      'bytes': 12,
+      'max_size': 0
+    },
+    'PREVDATE': {
+      'type': 'date',
+      'bytes': 10,
+      'max_size': 0
+    },
+    'ISSUESIZE': {
+      'type': 'int64'
+    },
+    'ISIN': {
+      'type': 'string',
+      'bytes': 36,
+      'max_size': 0
+    },
+    'LATNAME': {
+      'type': 'string',
+      'bytes': 90,
+      'max_size': 0
+    },
+    'REGNUMBER': {
+      'type': 'string',
+      'bytes': 90,
+      'max_size': 0
+    },
+    'PREVLEGALCLOSEPRICE': {
+      'type': 'double'
+    },
+    'PREVADMITTEDQUOTE': {
+      'type': 'double'
+    },
+    'CURRENCYID': {
+      'type': 'string',
+      'bytes': 12,
+      'max_size': 0
+    },
+    'SECTYPE': {
+      'type': 'string',
+      'bytes': 3,
+      'max_size': 0
+    },
+    'LISTLEVEL': {
+      'type': 'int32'
+    },
+    'SETTLEDATE': {
+      'type': 'date',
+      'bytes': 10,
+      'max_size': 0
+    }
+  },
+  'columns': [
+    'SECID',
+    'BOARDID',
+    'SHORTNAME',
+    'PREVPRICE',
+    'LOTSIZE',
+    'FACEVALUE',
+    'STATUS',
+    'BOARDNAME',
+    'DECIMALS',
+    'SECNAME',
+    'REMARKS',
+    'MARKETCODE',
+    'INSTRID',
+    'SECTORID',
+    'MINSTEP',
+    'PREVWAPRICE',
+    'FACEUNIT',
+    'PREVDATE',
+    'ISSUESIZE',
+    'ISIN',
+    'LATNAME',
+    'REGNUMBER',
+    'PREVLEGALCLOSEPRICE',
+    'PREVADMITTEDQUOTE',
+    'CURRENCYID',
+    'SECTYPE',
+    'LISTLEVEL',
+    'SETTLEDATE'
+  ],
+  'data': [
+    [
+      'FXUS',
+      'TQTD',
+      'FXUS ETF',
+      68.24,
+      1,
+      0,
+      'A',
+      'Т+: ETF (USD) - безадрес.',
+      2,
+      'FinEx USA UCITS ETF',
+      None,
+      'FNDT',
+      'IFTF',
+      None,
+      0.01,
+      68.86,
+      'USD',
+      '2021-01-05',
+      0,
+      'IE00BD3QHZ91',
+      'FinEx USA UCITS ETF',
+      None,
+      68.56,
+      68.56,
+      'USD',
+      'E',
+      1,
+      '2021-01-12'
+    ],
+    [
+      'FXUS',
+      'TQTF',
+      'FXUS ETF',
+      5077,
+      1,
+      0,
+      'A',
+      'Т+: ETF - безадрес.',
+      0,
+      'FinEx USA UCITS ETF',
+      None,
+      'FNDT',
+      'IFTF',
+      None,
+      1,
+      5087,
+      'USD',
+      '2021-01-05',
+      0,
+      'IE00BD3QHZ91',
+      'FinEx USA UCITS ETF',
+      None,
+      5065,
+      5065,
+      'SUR',
+      'E',
+      1,
+      '2021-01-11'
+    ]
+  ]
+}
