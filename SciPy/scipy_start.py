@@ -69,6 +69,9 @@ from sklearn.model_selection import train_test_split
 #                                                     random_state=42,  # управляет перемешиванием
 #                                                     train_size=0.33)  # размер тренировочной выборки
 
+# Выбор модели
+
+
 # линейная регрессия
 from sklearn.linear_model import LinearRegression
 from sklearn.datasets import load_boston
@@ -84,6 +87,8 @@ regression = LinearRegression()
 # print(model.coef_)  # вывод коэффициентов
 # предсказание
 # y_pred = model.predict(X_test)
+
+
 # Оценка эффективности модели (оценка точности)
 from sklearn.metrics import accuracy_score
 # 1 способ - тестовые данные у
