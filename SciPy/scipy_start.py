@@ -6,6 +6,7 @@ import plotly.express as px
 import plotly.figure_factory as ff
 import plotly.offline as offline
 import sklearn
+import pandas as pd
 
 # задание нормального распределения
 np.random.seed(0)  # - для какой-то там нормализации
@@ -21,6 +22,9 @@ colors_x2 = ['#835AF1', '#7FA6EE']
 def create_histogram():
     fig = px.histogram(x_rand1,
                        nbins=100,  # количество разбиений
+                       histnorm='probability density',  # тип нормализации гистограммы (здесь плотность вероятности)
+                       cumulative=True,  # кумулятивная функция
+                       opacity=0.8,  # насыщенность графика
                        marginal='box')  # дополнительное частотное распределение возле графика (rug - насечки)
     return fig
 
@@ -35,6 +39,11 @@ def create_distplot():
                              show_rug=False,
                              bin_size=[.1, .6])  # количество разбиений, для каждой группы отдельно
     return fig
+
+
+# Критерий Манна-Уитни
+# from scipy.stats import mannwhitneyu
+# u, p = mannwhitneyu(x, y)
 
 
 # Расстояние хи-квадрат Пирсона
@@ -63,11 +72,13 @@ Scikit-Learn - ДОКУМЕНТАЦИЯ
 - в случае машинного обучения без учителя выполняется преобразование свойств данных или вывод их значений посредством 
   методов transform() или predict().
 '''
+
 # разделение данных на обучающую выборку (training set) и контрольную (testing set)
 from sklearn.model_selection import train_test_split
 # X_train, X_test, y_train, y_test = train_test_split(X, y,
 #                                                     random_state=42,  # управляет перемешиванием
 #                                                     train_size=0.33)  # размер тренировочной выборки
+
 
 # Выбор модели
 
@@ -75,6 +86,7 @@ from sklearn.model_selection import train_test_split
 # линейная регрессия
 from sklearn.linear_model import LinearRegression
 from sklearn.datasets import load_boston
+
 # загрузка данных
 boston = load_boston()
 features = boston.data[:, 0:2]  # только 2 предиктора (признака)
@@ -91,17 +103,35 @@ regression = LinearRegression()
 
 # Оценка эффективности модели (оценка точности)
 from sklearn.metrics import accuracy_score
-# 1 способ - тестовые данные у
+# 1 способ - обычная проверка
 # score = accuracy_score(y_true=y_test, y_pred=y_pred)
 # 2 способ - перекрестная проверка модели (cross validation)
 from sklearn.model_selection import cross_val_score
+# - Кросс-валидация по K блокам (K-fold cross-validation)
 # score = cross_val_score(model, x, y, cv=5)
+# score.mean()
+# - Валидация последовательным случайным сэмплированием (random subsampling)
+# - Поэлементная кросс-валидация (Leave-one-out, LOO)
 
+# Кривые обучения
+from sklearn.model_selection import validation_curve
+# train_score, val_score = validation_curve(model(), X, y, 'parameter', degree, cv=7)
+from sklearn.model_selection import learning_curve
+# train_score, val_score = learning_curve(model(), X, y, 'parameter', degree, cv=7)
 
 
 # Логистическая регрессия
 from sklearn.linear_model import LogisticRegression
-# logreg = LogisticRegression()
-# model = logreg()
+from sklearn.preprocessing import LabelEncoder
 
-# offline.plot(create_distplot())
+df_train = pd.read_csv('train.csv')
+df_train['sex_cod'] = LabelEncoder().fit_transform(df_train.Sex)
+# print(df_train)
+# x_train = df_train.sex_cod
+# y_train = df_train.Survived
+#
+# logreg = LogisticRegression()
+# model = logreg.fit(x_train, y_train)
+# print(model)
+
+offline.plot(create_histogram())
