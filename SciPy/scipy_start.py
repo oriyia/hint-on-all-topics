@@ -1,12 +1,15 @@
+#%%
 from scipy.stats import chi2_contingency
 from scipy.stats import chisquare
 import scipy
+import kaleido
 import numpy as np
 import plotly.express as px
 import plotly.figure_factory as ff
 import plotly.offline as offline
 import sklearn
 import pandas as pd
+import psutil
 
 # задание нормального распределения
 np.random.seed(0)  # - для какой-то там нормализации
@@ -17,6 +20,20 @@ hist_data = [x_rand1, x_rand2]  # для нормальной работы, ко
 # Задание цвета
 colors_x3 = ['#835AF1', '#7FA6EE', '#B8F7D4']
 colors_x2 = ['#835AF1', '#7FA6EE']
+
+
+# РАСПРЕДЕЛЕНИЯ
+from scipy.stats import gamma
+lambda_g = 1
+k = 1
+x = np.linspace(0, 30, 200)  # задаем СВ Х
+gamma_distribution = gamma(lambda_g, 0, k)  # 0 - это смещение
+# mean = gamma_distribution.mean()  # вывод (также std,
+pdf = gamma_distribution.pdf(x)  # значения функции плотности вероятности
+# sample = gamma_distribution.rvs(size=5)  # значения значения плотности вероятности (5 штук)
+df = pd.DataFrame({'x': x, 'y': gamma_distribution.pdf(x)})
+fig = px.line(df, x=x, y='y')
+fig.show()
 
 
 def create_histogram():
@@ -134,4 +151,4 @@ df_train['sex_cod'] = LabelEncoder().fit_transform(df_train.Sex)
 # model = logreg.fit(x_train, y_train)
 # print(model)
 
-offline.plot(create_histogram())
+# offline.plot(create_histogram())
