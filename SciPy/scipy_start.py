@@ -23,6 +23,7 @@ colors_x2 = ['#835AF1', '#7FA6EE']
 
 
 # РАСПРЕДЕЛЕНИЯ
+# Гамма распределение
 from scipy.stats import gamma
 lambda_g = 1
 k = 1
@@ -31,9 +32,14 @@ gamma_distribution = gamma(lambda_g, 0, k)  # 0 - это смещение
 # mean = gamma_distribution.mean()  # вывод (также std,
 pdf = gamma_distribution.pdf(x)  # значения функции плотности вероятности
 # sample = gamma_distribution.rvs(size=5)  # значения значения плотности вероятности (5 штук)
+# stats = gamma_distribution.stats(1) ТАК А КАКИЕ ТАМ ЕЩЕ ЕСТЬ АРГУМЕНТЫ
 df = pd.DataFrame({'x': x, 'y': gamma_distribution.pdf(x)})
 fig = px.line(df, x=x, y='y')
-fig.show()
+# fig.show()
+# Нормальное распределение
+from scipy.stats import norm
+
+# norm_distribution = norm()
 
 
 def create_histogram():
@@ -71,6 +77,11 @@ def create_distplot():
 # observed = [[10, 6], [5, 15]]
 # chi2, p, df, exp = chi2_contingency(observed,
 #                                     correction=False) - поправка Йетса
+
+
+# Таблица сопряженности
+# table = pd.crosstab(df_train.Survived, df_train.Sex)
+
 
 # Точный критерий фишера
 # observed = [[1, 3], [3, 1]]
@@ -140,15 +151,13 @@ from sklearn.model_selection import learning_curve
 # Логистическая регрессия
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
-
 df_train = pd.read_csv('train.csv')
 df_train['sex_cod'] = LabelEncoder().fit_transform(df_train.Sex)
-# print(df_train)
-# x_train = df_train.sex_cod
-# y_train = df_train.Survived
-#
-# logreg = LogisticRegression()
-# model = logreg.fit(x_train, y_train)
-# print(model)
-
+print(df_train)
+x_train = df_train.sex_cod.values.reshape(-1, 1)
+y_train = df_train.Survived
+logreg = LogisticRegression()
+model = logreg.fit(x_train, y_train)
+print(model.coef_)
+print(table)
 # offline.plot(create_histogram())
