@@ -101,6 +101,13 @@ Scikit-Learn - ДОКУМЕНТАЦИЯ
   методов transform() или predict().
 '''
 
+# КОДИРОВКА ПЕРЕМЕННЫХ
+# from sklearn.preprocessing import LabelEncoder
+# codes = LabelEncoder().fit(df_train.Sex)  # создаем экземпляр класса и кодируем
+# print(codes.classes_)  # вывод этикеток кодировки ['female' 'male']
+# a = codes.transform(df_train.Sex)  # и трансформировать входные данные объекта Series в соответствии с кодами
+
+
 # разделение данных на обучающую выборку (training set) и контрольную (testing set)
 from sklearn.model_selection import train_test_split
 # X_train, X_test, y_train, y_test = train_test_split(X, y,
@@ -114,8 +121,6 @@ from sklearn.model_selection import train_test_split
 # линейная регрессия
 from sklearn.linear_model import LinearRegression
 from sklearn.datasets import load_boston
-
-# загрузка данных
 boston = load_boston()
 features = boston.data[:, 0:2]  # только 2 предиктора (признака)
 target = boston.target
@@ -152,12 +157,18 @@ from sklearn.model_selection import learning_curve
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
 df_train = pd.read_csv('train.csv')
-df_train['sex_cod'] = LabelEncoder().fit_transform(df_train.Sex)
-print(df_train)
-x_train = df_train.sex_cod.values.reshape(-1, 1)
+codes = LabelEncoder().fit(df_train.Sex)
+print(codes.classes_)
+a = codes.transform(df_train.Sex)
+print(a)
+df_train['sex_cod'] = LabelEncoder().fit_transform(df_train.Sex)  # кодировка переменной (0, 1)
+x_train = df_train.sex_cod.values.reshape(-1, 1)  # преобразование списка в список списков
 y_train = df_train.Survived
 logreg = LogisticRegression()
 model = logreg.fit(x_train, y_train)
 print(model.coef_)
-print(table)
 # offline.plot(create_histogram())
+
+
+
+
