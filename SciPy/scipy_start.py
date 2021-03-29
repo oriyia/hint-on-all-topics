@@ -10,6 +10,7 @@ import plotly.offline as offline
 import sklearn
 import pandas as pd
 import psutil
+import plotly.graph_objs as go
 
 # задание нормального распределения
 np.random.seed(0)  # - для какой-то там нормализации
@@ -40,6 +41,22 @@ fig = px.line(df, x=x, y='y')
 from scipy.stats import norm
 
 # norm_distribution = norm()
+
+
+# ПРОВЕРКА РАСПРЕДЕЛЕНИЯ НА НОРМАЛЬНОСТЬ
+# №1 QQ-PLOT
+from statsmodels.graphics.gofplots import qqplot
+df = pd.read_csv('weight-height.csv')
+qqplot_data = qqplot(df.Height, line='s').gca().lines
+fig = px.line(x=qqplot_data[1].get_xdata(), y=qqplot_data[1].get_ydata())
+fig.add_scatter(x=qqplot_data[0].get_xdata(), y=qqplot_data[0].get_ydata(), mode='markers', name='Норма')
+# fig.show()
+
+# №2 Критерий Шапиро-Уилка
+# from scipy.stats import shapiro
+# shapiro_test = shapiro(df.Height)
+# statistic, p_value = shapiro(df.Height)  # 0.9960623383522034 8.162489641544413e-16
+# print(shapiro_test)  # ShapiroResult(statistic=0.9960623383522034, pvalue=8.162489641544413e-16)
 
 
 def create_histogram():
@@ -157,18 +174,13 @@ from sklearn.model_selection import learning_curve
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
 df_train = pd.read_csv('train.csv')
-codes = LabelEncoder().fit(df_train.Sex)
-print(codes.classes_)
-a = codes.transform(df_train.Sex)
-print(a)
 df_train['sex_cod'] = LabelEncoder().fit_transform(df_train.Sex)  # кодировка переменной (0, 1)
 x_train = df_train.sex_cod.values.reshape(-1, 1)  # преобразование списка в список списков
 y_train = df_train.Survived
 logreg = LogisticRegression()
 model = logreg.fit(x_train, y_train)
-print(model.coef_)
+# print(model.coef_)
+# print(model.intercept_)
 # offline.plot(create_histogram())
-
-
 
 
