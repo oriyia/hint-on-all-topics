@@ -3,11 +3,11 @@ import numpy as np
 import datetime
 #
 # НАСТРОЙКИ ОТОБРАЖЕНИЯ
-# # pd.options.display.max_rows = 1000  # максимальное число выводимых строк
-# # pd.set_option('max_colwidth', 800)  максимальное отображаемое количество символов в строке
-# # pd.set_option('display.width', 900)  ширина дисплея вывода
-# # pd.set_option('display.max_columns', 14)  # максимальное количество отображаемых столбцов
-# # pd.set_option('max_colwidth', 800, 'display.max_columns', 10, 'display.width', 1000)
+# pd.options.display.max_rows = 1000  # максимальное число выводимых строк
+# pd.set_option('max_colwidth', 800)  максимальное отображаемое количество символов в строке
+# pd.set_option('display.width', 900)  ширина дисплея вывода
+# pd.set_option('display.max_columns', 14)  # максимальное количество отображаемых столбцов
+# pd.set_option('max_colwidth', 800, 'display.max_columns', 10, 'display.width', 1000)
 #
 #
 # # ОБЪЕКТ Series

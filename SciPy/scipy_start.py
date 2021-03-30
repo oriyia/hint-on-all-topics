@@ -11,6 +11,8 @@ import sklearn
 import pandas as pd
 import psutil
 import plotly.graph_objs as go
+pd.set_option('display.max_columns', 14)
+
 
 # задание нормального распределения
 np.random.seed(0)  # - для какой-то там нормализации
@@ -24,7 +26,7 @@ colors_x2 = ['#835AF1', '#7FA6EE']
 
 
 # РАСПРЕДЕЛЕНИЯ
-# Гамма распределение
+# ГАММА РАСПРЕДЕЛЕНИЕ
 from scipy.stats import gamma
 lambda_g = 1
 k = 1
@@ -34,22 +36,33 @@ gamma_distribution = gamma(lambda_g, 0, k)  # 0 - это смещение
 pdf = gamma_distribution.pdf(x)  # значения функции плотности вероятности
 # sample = gamma_distribution.rvs(size=5)  # значения значения плотности вероятности (5 штук)
 # stats = gamma_distribution.stats(1) ТАК А КАКИЕ ТАМ ЕЩЕ ЕСТЬ АРГУМЕНТЫ
-df = pd.DataFrame({'x': x, 'y': gamma_distribution.pdf(x)})
+df = pd.DataFrame({'x': x, 'y': pdf})
 fig = px.line(df, x=x, y='y')
-# fig.show()
-# Нормальное распределение
-from scipy.stats import norm
+# ПРИМЕР С ОБУЧЕНИЕМ
+df = pd.read_csv('OnlineRetail.csv')
+df = df[(df.UnitPrice > 0) & (df.Quantity > 0)]
+df['TotalPrice'] = df['Quantity'] * df['UnitPrice']
+user_spending = df.groupby(['CustomerID'])['TotalPrice'].sum()
+user_spending = user_spending[user_spending.values < 10000]
+params = gamma.fit(user_spending.values)
+line = np.linspace(10, 10000, 200)
+fig = px.histogram(user_spending, nbins=50, histnorm='probability density')
+fig.add_scatter(x=line, y=gamma(*params).pdf(line))
+fig.show()
 
+
+# НОРМАЛЬНОЕ РАСПРЕДЕЛЕНИЕ
+from scipy.stats import norm
 # norm_distribution = norm()
 
 
 # ПРОВЕРКА РАСПРЕДЕЛЕНИЯ НА НОРМАЛЬНОСТЬ
 # №1 QQ-PLOT
-from statsmodels.graphics.gofplots import qqplot
-df = pd.read_csv('weight-height.csv')
-qqplot_data = qqplot(df.Height, line='s').gca().lines
-fig = px.line(x=qqplot_data[1].get_xdata(), y=qqplot_data[1].get_ydata())
-fig.add_scatter(x=qqplot_data[0].get_xdata(), y=qqplot_data[0].get_ydata(), mode='markers', name='Норма')
+# from statsmodels.graphics.gofplots import qqplot
+# df = pd.read_csv('weight-height.csv')
+# qqplot_data = qqplot(df.Height, line='s').gca().lines
+# fig = px.line(x=qqplot_data[1].get_xdata(), y=qqplot_data[1].get_ydata())
+# fig.add_scatter(x=qqplot_data[0].get_xdata(), y=qqplot_data[0].get_ydata(), mode='markers', name='Норма')
 # fig.show()
 
 # №2 Критерий Шапиро-Уилка
