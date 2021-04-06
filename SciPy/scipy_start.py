@@ -94,6 +94,18 @@ def create_distplot():
     return fig
 
 # СТАТИСТИЧЕСКИЕ КРИТЕРИИ
+# 1) Параметрические
+
+# 2) Непараметрические
+# Зависимые выборки
+# from scipy.stats import wilcoxon
+# разница между двумя величинами
+# d = [6, 8, 14, 16, 23, 24, 28, 29, 41, -48, 49, 56, 60, -67, 75]
+# w, p = wilcoxon(d)
+# либо x и y указываем
+# w, p = wilcoxon(x, y)
+
+# Независимые выборки
 # Критерий Манна-Уитни
 # from scipy.stats import mannwhitneyu
 # u, p = mannwhitneyu(x, y)
