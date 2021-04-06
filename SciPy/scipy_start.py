@@ -98,12 +98,18 @@ def create_distplot():
 
 # 2) Непараметрические
 # Зависимые выборки
+# критерий Уилкоксона
 # from scipy.stats import wilcoxon
 # разница между двумя величинами
 # d = [6, 8, 14, 16, 23, 24, 28, 29, 41, -48, 49, 56, 60, -67, 75]
 # w, p = wilcoxon(d)
 # либо x и y указываем
 # w, p = wilcoxon(x, y)
+
+# критерий Фридмана
+# from scipy.stats import friedmanchisquare
+# result = friedmanchisquare(measurements1, measurements2, measurements3)
+
 
 # Независимые выборки
 # Критерий Манна-Уитни
