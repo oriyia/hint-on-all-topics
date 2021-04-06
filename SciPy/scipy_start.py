@@ -39,16 +39,16 @@ pdf = gamma_distribution.pdf(x)  # значения функции плотно�
 df = pd.DataFrame({'x': x, 'y': pdf})
 fig = px.line(df, x=x, y='y')
 # ПРИМЕР С ОБУЧЕНИЕМ
-df = pd.read_csv('OnlineRetail.csv')
-df = df[(df.UnitPrice > 0) & (df.Quantity > 0)]
-df['TotalPrice'] = df['Quantity'] * df['UnitPrice']
-user_spending = df.groupby(['CustomerID'])['TotalPrice'].sum()
-user_spending = user_spending[user_spending.values < 10000]
-params = gamma.fit(user_spending.values)
-line = np.linspace(10, 10000, 200)
-fig = px.histogram(user_spending, nbins=50, histnorm='probability density')
-fig.add_scatter(x=line, y=gamma(*params).pdf(line))
-fig.show()
+# df = pd.read_csv('OnlineRetail.csv')
+# df = df[(df.UnitPrice > 0) & (df.Quantity > 0)]
+# df['TotalPrice'] = df['Quantity'] * df['UnitPrice']
+# user_spending = df.groupby(['CustomerID'])['TotalPrice'].sum()
+# user_spending = user_spending[user_spending.values < 10000]
+# params = gamma.fit(user_spending.values)
+# line = np.linspace(10, 10000, 200)
+# fig = px.histogram(user_spending, nbins=50, histnorm='probability density')
+# fig.add_scatter(x=line, y=gamma(*params).pdf(line))
+# fig.show()
 
 
 # НОРМАЛЬНОЕ РАСПРЕДЕЛЕНИЕ
@@ -93,10 +93,17 @@ def create_distplot():
                              bin_size=[.1, .6])  # количество разбиений, для каждой группы отдельно
     return fig
 
-
+# СТАТИСТИЧЕСКИЕ КРИТЕРИИ
 # Критерий Манна-Уитни
 # from scipy.stats import mannwhitneyu
 # u, p = mannwhitneyu(x, y)
+
+# критерий Краскела-Уоллиса
+# from scipy.stats import kruskal
+# x = [1, 1, 1]
+# y = [2, 2, 2]
+# z = [2, 2]
+# result = kruskal(x, y, z)  # KruskalResult(statistic=7.0, pvalue=0.0301973834223185)
 
 
 # Расстояние хи-квадрат Пирсона
