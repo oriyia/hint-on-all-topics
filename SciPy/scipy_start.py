@@ -50,11 +50,9 @@ fig = px.line(df, x=x, y='y')
 # fig.add_scatter(x=line, y=gamma(*params).pdf(line))
 # fig.show()
 
-
 # НОРМАЛЬНОЕ РАСПРЕДЕЛЕНИЕ
 from scipy.stats import norm
 # norm_distribution = norm()
-
 
 # ПРОВЕРКА РАСПРЕДЕЛЕНИЯ НА НОРМАЛЬНОСТЬ
 # №1 QQ-PLOT
@@ -93,11 +91,15 @@ def create_distplot():
                              bin_size=[.1, .6])  # количество разбиений, для каждой группы отдельно
     return fig
 
-# СТАТИСТИЧЕСКИЕ КРИТЕРИИ
-# 1) Параметрические
 
-# 2) Непараметрические
-# Зависимые выборки
+"""-----------------------------------------------------------------------------------------"""
+"""-----------------------------------------------------------------------------------------"""
+"""СТАТИСТИЧЕСКИЕ КРИТЕРИИ"""
+
+""" 1) Параметрические"""
+
+""" 2) Непараметрические"""
+"""Зависимые выборки"""
 # критерий Уилкоксона
 # from scipy.stats import wilcoxon
 # разница между двумя величинами
@@ -110,8 +112,7 @@ def create_distplot():
 # from scipy.stats import friedmanchisquare
 # result = friedmanchisquare(measurements1, measurements2, measurements3)
 
-
-# Независимые выборки
+"""Независимые выборки"""
 # Критерий Манна-Уитни
 # from scipy.stats import mannwhitneyu
 # u, p = mannwhitneyu(x, y)
@@ -123,7 +124,7 @@ def create_distplot():
 # z = [2, 2]
 # result = kruskal(x, y, z)  # KruskalResult(statistic=7.0, pvalue=0.0301973834223185)
 
-
+""" 3) Номинативные переменные"""
 # Расстояние хи-квадрат Пирсона
 # a = chisquare([795, 705])  # вывод Power_divergenceResult(statistic=5.4, p-value=0.02013675155034633)
 # Cumulative distribution function (cdf) - ФР
@@ -133,6 +134,13 @@ def create_distplot():
 # chi2, p, df, exp = chi2_contingency(observed,
 #                                     correction=False) - поправка Йетса
 
+# Критерий Мак-Немара
+# from statsmodels.stats.contingency_tables import mcnemar
+# # define contingency table
+# table = [[4, 2],
+#          [1, 3]]
+# result = mcnemar(table, exact=True)
+# print('statistic=%.3f, p-value=%.3f' % (result.statistic, result.pvalue))
 
 # Таблица сопряженности
 # table = pd.crosstab(df_train.Survived, df_train.Sex)
