@@ -6,6 +6,11 @@ import numpy as np
 # df.to_numpy()
 
 
+# СТАТИСТИКА
+# boot_means = [162, 172.2, ...., 168.6]
+# a = np.percentile(boot_means, [2.5, 97.5])  # array ([166.627975, 171.60705]) # 95% доверительный интервал
+
+
 # СОЗДАНИЕ массивов
 # np.array([1, 2, 3], dtype='float32' или dtype=int)  # для задания типа
 # np.arange(10).reshape((2, 5))
@@ -40,8 +45,6 @@ x3 = np.random.randint(10, size=(3, 5, 6))
 
 # поменять тип
 # b = a.astype('str')
-
-b = np.random()
 
 # ИНДЕКСАЦИЯ
 m = np.array([[1, 2, 3],
