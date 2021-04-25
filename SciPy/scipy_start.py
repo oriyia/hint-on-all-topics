@@ -166,6 +166,59 @@ from statsmodels.stats.contingency_tables import cochrans_q
 # result = scipy.stats.fisher_exact(observed)
 
 
+# BOOTSTRAP
+def get_bootstrap_sample(x, B_sample=1):
+    """
+    x - выборка
+    B_sample - сколько бутстреповских выборок нужно делать в конечном итоге
+    """
+    N = x.size  # размер выборки
+    sample = np.random.choice(x, size=(N, B_sample), replase=True)  # c повторениями, размером х на B_sample
+
+    if B_sample == 1:
+        sample = sample.T[0]  # для удобства разворачиваем в вектор
+    return sample
+
+
+x_boot = get_bootstrap_sample(x, B_sample=10**6)  # получаем матрицу размером сто на миллион
+x_boot_m = np.mean(x_boot, axis=0)  # средние по каждой бутстреповской выборке
+# далее можно построить гистограмму для выборочных средних, имеющее нормальное распределение
+# график qq-plot данный факт подтверждает
+# построим доверительный интервал для средних Эфрона
+alpha = 0.05
+left = np.quantile(x_boot_m, alpha/2)
+right = np.quantile(x_boot_m, 1 - alpha/2)
+# на выходе получаем два числа
+
+# доверительный интервал Холла (для центрированной статистики)
+# alpha = 0.05
+# theta_hat = np.mean(x)  # среднее значение исходной выборки
+# средние отклонения значений бутстреповской выборки от среднего исходной выборки
+# x_boot_m = np.mean(x_boot - theta_hat, axis=0)
+# left = theta_hat - np.quantile(x_boot_m, 1 - alpha/2)
+# right = theta_hat - np.quantile(x_boot_m, alpha/2)
+
+# t-процентильный доверительный интервал
+# theta_hat = np.mean(x)
+# std_hat = np.std(x)
+#
+# x_boot_t = np.mean(x_boot - theta_hat, axis=0)
+# x_boot_t = x_boot_t / np.std(x_boot, axis=0)
+# left = theta_hat - np.quantile(x_boot_t, 1 - alpha/2) * std_hat
+# right = theta_hat - np.quantile(x_boot_t, alpha/2) * std_hat
+
+# доверительный интервал для разницы мужду двумя выборками (по Эфрону)
+# def stat_intervals(boot, alpha=0.05):
+#     left = np.quantile(boot, alpha/2)
+#     right = np.quantile(boot, 1 - alpha/2)
+#     return left, right
+#
+# stat_intervals(x_boot - y_boot)
+
+
+
+
+
 
 '''
 Scikit-Learn - ДОКУМЕНТАЦИЯ
