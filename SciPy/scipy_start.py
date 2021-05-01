@@ -107,7 +107,11 @@ def create_distplot():
 # result = f_oneway(tillamook, newport, petersburg, magadan, tvarminne)
 
 # 2-х факторный дисперсионный анализ
-from scipy.stats import f
+# import pingouin as pg
+# dv - это название столбца, содержащего зависимую переменную,
+# between это столбец, содержащий коэффициент между группами.
+# aov = pg.anova(dv='Result', between=['Rambler', 'Design'], data=data, detailed=True)
+# print(aov)
 
 
 """ 2) Непараметрические"""
