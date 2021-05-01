@@ -178,6 +178,16 @@ from statsmodels.stats.contingency_tables import cochrans_q
 # results = bootstrap.ci(data=data, statfunction=scipy.mean)
 # print(results)
 
+# еще метод
+# import bootstrapped.bootstrap as bs
+# import bootstrapped.stats_functions as bs_stats
+# mean = 354
+# stdev = 20
+# population = np.random.normal(loc=mean, scale=stdev, size=15000)
+# samples = population[:2000]
+# print(bs.bootstrap(samples, stat_func=bs_stats.mean))
+# print(bs.bootstrap(samples, stat_func=bs_stats.std))
+
 
 def get_bootstrap_sample(x, B_sample=1):
     """
