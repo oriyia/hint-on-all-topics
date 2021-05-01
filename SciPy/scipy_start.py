@@ -171,6 +171,14 @@ from statsmodels.stats.contingency_tables import cochrans_q
 
 
 # BOOTSTRAP
+# сравни как работают оба метода, и какой быстрее в итоге
+# import scikits.bootstrap as bootstrap
+# from matplotlib import pyplot as plt
+# data = stats.poisson.rvs(33, size=15000)
+# results = bootstrap.ci(data=data, statfunction=scipy.mean)
+# print(results)
+
+
 def get_bootstrap_sample(x, B_sample=1):
     """
     x - выборка
