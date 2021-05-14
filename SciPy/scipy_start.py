@@ -28,7 +28,7 @@ colors_x2 = ['#835AF1', '#7FA6EE']
 # РАСПРЕДЕЛЕНИЯ
 # ГАММА РАСПРЕДЕЛЕНИЕ
 from scipy.stats import gamma
-lambda_g = 1
+lambda_g = 5
 k = 1
 x = np.linspace(0, 30, 200)  # задаем СВ Х
 gamma_distribution = gamma(lambda_g, 0, k)  # 0 - это смещение
@@ -37,7 +37,36 @@ pdf = gamma_distribution.pdf(x)  # значения функции плотно�
 # sample = gamma_distribution.rvs(size=5)  # значения значения плотности вероятности (5 штук)
 # stats = gamma_distribution.stats(1) ТАК А КАКИЕ ТАМ ЕЩЕ ЕСТЬ АРГУМЕНТЫ
 df = pd.DataFrame({'x': x, 'y': pdf})
-fig = px.line(df, x=x, y='y')
+fig = px.line(df, x=x, y='y',
+              template='plotly_white',
+              color_discrete_sequence=px.colors.sequential.Plasma)
+fig.update_layout(title=dict(text='<b>График функции плотности вероятности</b>',
+                             x=.5,
+                             xanchor="center",
+                             font=dict(size=30,
+                                       family='Arial',
+                                       color='#888888')),  # название графика
+                  showlegend=False)
+fig.update_xaxes(range=[0, 10],
+                 title=dict(text='t',
+                            font=dict(size=25,
+                                      family='Arial',
+                                      color='#888888')),
+                 tickfont=dict(family='Arial',
+                               color='#888888',
+                               size=14),
+                 gridcolor='#dbdbdb',
+                 zerolinewidth=2, zerolinecolor='#c3c3c3')
+fig.update_yaxes(title=dict(text='f(t|λ,k)',
+                            font=dict(size=25,
+                                      family='Arial',
+                                      color='#888888')),
+                 tickfont=dict(family='Arial',
+                               color='#888888',
+                               size=14),
+                 gridcolor='#dbdbdb',
+                 zerolinewidth=2, zerolinecolor='#c3c3c3')
+fig.show()
 # ПРИМЕР С ОБУЧЕНИЕМ
 # df = pd.read_csv('OnlineRetail.csv')
 # df = df[(df.UnitPrice > 0) & (df.Quantity > 0)]
@@ -274,13 +303,13 @@ from sklearn.model_selection import train_test_split
 
 
 # линейная регрессия
-from sklearn.linear_model import LinearRegression
-from sklearn.datasets import load_boston
-boston = load_boston()
-features = boston.data[:, 0:2]  # только 2 предиктора (признака)
-target = boston.target
-# создать объект (экземпляр класса) линейной регрессии
-regression = LinearRegression()
+# from sklearn.linear_model import LinearRegression
+# from sklearn.datasets import load_boston
+# boston = load_boston()
+# features = boston.data[:, 0:2]  # только 2 предиктора (признака)
+# target = boston.target
+# # создать объект (экземпляр класса) линейной регрессии
+# regression = LinearRegression()
 # подгонка линейной регрессии
 # model = regression.fit(X_train, y_train)
 # print(model.intercept_)  # вывод intercept
@@ -309,14 +338,14 @@ from sklearn.model_selection import learning_curve
 
 
 # Логистическая регрессия
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import LabelEncoder
-df_train = pd.read_csv('train.csv')
-df_train['sex_cod'] = LabelEncoder().fit_transform(df_train.Sex)  # кодировка переменной (0, 1)
-x_train = df_train.sex_cod.values.reshape(-1, 1)  # преобразование списка в список списков
-y_train = df_train.Survived
-logreg = LogisticRegression()
-model = logreg.fit(x_train, y_train)
+# from sklearn.linear_model import LogisticRegression
+# from sklearn.preprocessing import LabelEncoder
+# df_train = pd.read_csv('train.csv')
+# df_train['sex_cod'] = LabelEncoder().fit_transform(df_train.Sex)  # кодировка переменной (0, 1)
+# x_train = df_train.sex_cod.values.reshape(-1, 1)  # преобразование списка в список списков
+# y_train = df_train.Survived
+# logreg = LogisticRegression()
+# model = logreg.fit(x_train, y_train)
 # print(model.coef_)
 # print(model.intercept_)
 # offline.plot(create_histogram())
