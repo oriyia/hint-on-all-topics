@@ -64,6 +64,9 @@ import datetime
 # результатом функции Numpy
 # # a = pd.DataFrame(np.random.rand(3, 2), columns=['foo', 'bar'], index=['a', 'b', 'c'])
 # # a = pd.DataFrame([['2019-10-13 00:00:00', 0]], columns=['date', 'price']) 1 строка, 2 столбца
+# загрузка npy
+# arr_pandas = np.load('arr_pandas.npy', allow_pickle=True)
+# arr = pd.DataFrame(arr_pandas)
 # словарем со списками
 # pd.DateFrame({'название столбца': [можно и одно значение, но список]})
 # с помощью объектов Series
@@ -72,9 +75,14 @@ import datetime
 # table['new_col'] = [...] или Series например table['col'] / 2
 # table.insert(1, 'name_col', Series) - вставка столбца в определенную позицию
 # table[:, 'new_col'] = 0 - добавление столбца со всеми нулевыми значениями
-# # a.columns = []  a.index = []
+
+
+# ИЗМЕНЕНИЕ ТАБЛИЦ
 # ПЕРЕИМЕНОВАНИЕ СТОЛБЦОВ
 # table.rename(columns={'что хотим изм': 'на что хотим заменить'}, inplace=True)
+# ИЛИ
+# arr.columns = ['id', 'dist', 'climb', 'time', 'timef', 'type']
+# a.columns = []  a.index = []
 # ДОБАВЛЕНИЕ СТРОК APPEND
 # table.append(table2, ignore_index=True) - если были разные столбцы, то заполнится значениями Nan
 # ignore_index - не сохраняет предыдущих индексов
@@ -193,7 +201,7 @@ import datetime
 # group_age = pd.cut([список с возрастами], [6, 18, 25, 35, 75], labels=[название для групп])
 # pd.qcut(фрейм, 5) - разбивка фрейма на 5 одинаковых групп
 # РАНЖИРОВАНИЕ
-# table.rank() - выствление порядкого номера от меньшего к большему
+# table.rank() - выставление порядкового номера от меньшего к большему
 # ПРОЦЕНТНОЕ ИЗМЕНЕНИЕ ДЛЯ КАЖДОЙ СТРОКИ
 # table['aa'].pct_change()
 # СКОЛЬЗЯЩЕЕ rolling
@@ -241,6 +249,7 @@ import datetime
 # # table.dropna(axis=1)  # удаление столбцов, в которых есть Nan
 # # table.dropna(how='all' или 'any')  # удаление где хотя бы один Nan, all - только где все Nan
 # # table.dropna(thresh=2)   # удалит если пропущенных 2 и более
+# проверка пропусков по конкретному столбцу
 # # students_birthday = students.dropna(subset=['birthday']).reset_index(drop=True)  # не сохраняет старый индекс
 # # в новом столбце
 # ИНТЕРПОЛЯЦИЯ
@@ -649,22 +658,6 @@ import ast
 # df = pd.read_json('https://www.metaweather.com/api/location/2122265/2020/06/20/') # можно и так
 
 
-from pandas_datareader import data as pdr
-import yfinance as yf
-yf.pdr_override()
-date='2020-09-01'
-
-
-yhf = pdr.get_quote_yahoo("AAPL")
-yhf2 = pdr.get_data_yahoo_actions("AAPL", date).loc[date].Close
-print(yhf.price)
-# print(round(yhf2.loc[date].Close, 2))
-import pprint
-pp = pprint.PrettyPrinter(depth=4)
-
-msft = yf.Ticker("AAPL")
-pp.pprint(msft.info)
-
 # ежедневное процентное изменение
 # table_pc = (table / table.shift(1)) - 1
 # ежедневная накопленная доходность
@@ -687,7 +680,7 @@ pp.pprint(msft.info)
 # строки в серии занимают столько же места сколько занимали бы отдельно в Python
 # изменение типа столбца object на category - выявляет уникальные значения и присваивает им целое число
 # df['col'].astype('category') - на 98% может снизить потребление памяти
-# !!! исплользовать только если количество уникальных значений не более 50% от всех значений в столбце
+# !!! использовать только если количество уникальных значений не более 50% от всех значений в столбце
 # !!! также нельзя применять функции такие, как max(), min() и т.д.
 # ИЗМЕНЕНИЕ ТИПА СТОЛБЦА ПРИ ЗАГРУЗКЕ
 # pd.read_csv('file.csv', dtype=dict, parse_dates=['date']) - где dict - словарь ключи это название столбцов,
@@ -709,6 +702,6 @@ pp.pprint(msft.info)
 # 3) обработка редких категорий (вычисляем количество категорий) самые редкие категории объединяем в одну общую
 #    категорию OTHER - table.at[table['col'] == 'редкая категория', 'col'] == 'OTHER' к остальным также
 # 4) при прогнозном моделировании дальше необходимо разбить данные на обучающую и контрольную выборки
-# 5) импутация пропусков отдельно у каждой выборки (пропуски заполняются медианой и т.п. вычисленные на
+# 5) ампутация пропусков отдельно у каждой выборки (пропуски заполняются медианой и т.п. вычисленные на
 #    ОБУЧАЮЩЕЙ ВЫБОРКЕ. Категории заменяются на моду категорий
 #    df['col'] = df['col'].fillna('название категории')
