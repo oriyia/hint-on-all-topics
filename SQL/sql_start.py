@@ -8,14 +8,19 @@ engine.connect()
 
 print(engine)
 
-sql = '''
+sql_query = '''
 select product_id, product_name, unit_price
 from products p
 where unit_price > 22
 '''
 
-df_sql = pd.read_sql(sql, engine)
-print(df_sql.head())
+
+# функция-обертка
+def select_data(sql):
+    return pd.read_sql(sql, engine)
+
+
+print(select_data(sql_query))
 
 # df = 'наш dataframe'
 
