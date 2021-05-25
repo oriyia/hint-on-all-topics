@@ -371,6 +371,8 @@ import datetime
 # СТРОКИ ПРИ АГРЕГИРОВАНИИ
 # df.groupby("content_id")['tag'].apply(lambda tags: ','.join(tags)) - строки через запятую
 # grp = df.groupby('A').agg(B_sum=('B','sum'), C=('C', ', '.join)).reset_index()
+# АГРЕГИРОВАНИЕ С УЧЕТОМ NULL
+# df.groupby(['content_id'], dropna=False)['tag'].count()  # null будут учитываться
 
 
 # # ПРЕОБРАЗОВАНИЕ
