@@ -68,6 +68,13 @@ from sklearn.naive_bayes import GaussianNB  # выбираем класс мод
 # model.fit(x_train)  # обучение модели на данных, у мы не указываем
 # x_2d = model.transform(x_train)  # преобразуем данные в двумерные
 
+# КЛАСТЕРИЗАЦИЯ
+# 1) Смесь Гауссовых распределений
+# from sklearn.mixture import GaussianMixture
+# model = GaussianMixture(n_components=3, covariance_type='full')  # создаем экземпляр с гиперпараметрами
+# model.fit(x_train)  # обучаем модель, у не указываем
+# y_gmm = model.predict(x_test)  # определяем метки классов
+
 
 # Оценка эффективности модели (оценка точности)
 from sklearn.metrics import accuracy_score
