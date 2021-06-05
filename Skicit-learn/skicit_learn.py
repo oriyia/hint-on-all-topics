@@ -61,10 +61,18 @@ from sklearn.naive_bayes import GaussianNB  # выбираем класс мод
 # y_model = model.predict(x_test)  # предсказание
 
 
+# ПОНИЖЕНИЕ РАЗМЕРНОСТИ
+# 1) МЕТОД ГЛАВНЫХ КОМПОНЕНТ
+# from sklearn.decomposition import PCA  # выбор класс модели
+# model = PCA(n_components=2)  # создание экземпляра класса с гиперпараметрами
+# model.fit(x_train)  # обучение модели на данных, у мы не указываем
+# x_2d = model.transform(x_train)  # преобразуем данные в двумерные
+
+
 # Оценка эффективности модели (оценка точности)
 from sklearn.metrics import accuracy_score
 # 1 способ - обычная проверка
-# score = accuracy_score(y_true=y_test, y_pred=y_pred)
+# score = accuracy_score(y_true=y_test, y   _pred=y_pred)
 # 2 способ - перекрестная проверка модели (cross validation)
 from sklearn.model_selection import cross_val_score
 # - Кросс-валидация по K блокам (K-fold cross-validation)
@@ -72,6 +80,7 @@ from sklearn.model_selection import cross_val_score
 # score.mean()
 # - Валидация последовательным случайным сэмплированием (random subsampling)
 # - Поэлементная кросс-валидация (Leave-one-out, LOO)
+
 
 # Кривые обучения
 from sklearn.model_selection import validation_curve
