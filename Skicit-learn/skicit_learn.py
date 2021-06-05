@@ -1,12 +1,12 @@
 # МАШИННОЕ ОБУЧЕНИЕ - создание моделей данных. (построение математических моделей данных).
 # столбцы - это признаки (матрица признаков).
-# размероность - [выборки, признаки]
+# размерность - [выборки, признаки]
 
 # целевой массив - одномерен, столбец Series
+import pandas as pd
+import numpy as np
 
-
-
-'''
+"""
 Scikit-Learn - ДОКУМЕНТАЦИЯ
 Чаще всего использование API статистического оценивания библиотеки Scikit-Learn включает следующие шаги (далее мы
 рассмотрим несколько подробных примеров).
@@ -18,7 +18,7 @@ Scikit-Learn - ДОКУМЕНТАЦИЯ
 - в случае машинного обучения с учителем метки для неизвестных данных обычно предсказывают с помощью метода predict();
 - в случае машинного обучения без учителя выполняется преобразование свойств данных или вывод их значений посредством
   методов transform() или predict().
-'''
+"""
 
 # КОДИРОВКА ПЕРЕМЕННЫХ
 # from sklearn.preprocessing import LabelEncoder
@@ -29,7 +29,8 @@ Scikit-Learn - ДОКУМЕНТАЦИЯ
 
 # разделение данных на обучающую выборку (training set) и контрольную (testing set)
 from sklearn.model_selection import train_test_split
-# X_train, X_test, y_train, y_test = train_test_split(X, y,
+
+# x_train, x_test, y_train, y_test = train_test_split(x, y,
 #                                                     random_state=42,  # управляет перемешиванием
 #                                                     train_size=0.33)  # размер тренировочной выборки
 
@@ -38,9 +39,9 @@ from sklearn.model_selection import train_test_split
 
 
 # линейная регрессия
-# from sklearn.linear_model import LinearRegression
+# from sklearn.linear_model import LinearRegression  # выбираем класс модели
 # from sklearn.datasets import load_boston
-# boston = load_boston()
+# boston = load_boston()  # создаем экземпляр модели
 # features = boston.data[:, 0:2]  # только 2 предиктора (признака)
 # target = boston.target
 # # создать объект (экземпляр класса) линейной регрессии
@@ -51,6 +52,13 @@ from sklearn.model_selection import train_test_split
 # print(model.coef_)  # вывод коэффициентов
 # предсказание
 # y_pred = model.predict(X_test)
+
+
+# Гауссов наивный байесовский классификатор
+from sklearn.naive_bayes import GaussianNB  # выбираем класс модели
+# model = GaussianNB()  # создаем экземпляр класса
+# model.fit(x_train, y_train)  # обучение модели
+# y_model = model.predict(x_test)  # предсказание
 
 
 # Оценка эффективности модели (оценка точности)
@@ -84,5 +92,3 @@ from sklearn.model_selection import learning_curve
 # print(model.coef_)
 # print(model.intercept_)
 # offline.plot(create_histogram())
-
-
