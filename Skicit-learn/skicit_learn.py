@@ -37,7 +37,7 @@ from sklearn.model_selection import train_test_split
 
 # Выбор модели
 
-
+# РЕГРЕССИЯ
 # линейная регрессия
 # from sklearn.linear_model import LinearRegression  # выбираем класс модели
 # from sklearn.datasets import load_boston
@@ -53,12 +53,18 @@ from sklearn.model_selection import train_test_split
 # предсказание
 # y_pred = model.predict(X_test)
 
-
+# КЛАССИФИКАЦИЯ
 # Гауссов наивный байесовский классификатор
 from sklearn.naive_bayes import GaussianNB  # выбираем класс модели
 # model = GaussianNB()  # создаем экземпляр класса
 # model.fit(x_train, y_train)  # обучение модели
 # y_model = model.predict(x_test)  # предсказание
+
+# Метод k-средних
+# from sklearn.neighbors import KNeighborsClassifier
+# model = KNeighborsClassifier(n_neighbors=1)
+# model.fit(x_train, y_train)
+# y_model = model.predict(x_test)
 
 
 # ПОНИЖЕНИЕ РАЗМЕРНОСТИ
@@ -87,6 +93,11 @@ from sklearn.model_selection import cross_val_score
 # score.mean()
 # - Валидация последовательным случайным сэмплированием (random subsampling)
 # - Поэлементная кросс-валидация (Leave-one-out, LOO)
+
+
+# МАТРИЦА РАЗЛИЧИЙ - для определения, где именно наша модель ошиблась
+# from sklearn.metrics import confusion_matrix
+# mat = confusion_matrix(y_test, y_model)
 
 
 # Кривые обучения
