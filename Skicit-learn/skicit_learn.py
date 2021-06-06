@@ -66,6 +66,19 @@ from sklearn.naive_bayes import GaussianNB  # выбираем класс мод
 # model.fit(x_train, y_train)
 # y_model = model.predict(x_test)
 
+# Логистическая регрессия
+# from sklearn.linear_model import LogisticRegression
+# from sklearn.preprocessing import LabelEncoder
+# df_train = pd.read_csv('train.csv')
+# df_train['sex_cod'] = LabelEncoder().fit_transform(df_train.Sex)  # кодировка переменной (0, 1)
+# x_train = df_train.sex_cod.values.reshape(-1, 1)  # преобразование списка в список списков
+# y_train = df_train.Survived
+# logreg = LogisticRegression()
+# model = logreg.fit(x_train, y_train)
+# print(model.coef_)
+# print(model.intercept_)
+# offline.plot(create_histogram())
+
 
 # ПОНИЖЕНИЕ РАЗМЕРНОСТИ
 # 1) МЕТОД ГЛАВНЫХ КОМПОНЕНТ
@@ -82,10 +95,10 @@ from sklearn.naive_bayes import GaussianNB  # выбираем класс мод
 # y_gmm = model.predict(x_test)  # определяем метки классов
 
 
-# Оценка эффективности модели (оценка точности)
+# ОЦЕНКА ЭФФЕКТИВНОСТИ МОДЕЛИ (ОЦЕНКА ТОЧНОСТИ)
 from sklearn.metrics import accuracy_score
 # 1 способ - обычная проверка
-# score = accuracy_score(y_true=y_test, y   _pred=y_pred)
+# score = accuracy_score(y_true=y_test, y_pred=y_pred)
 # 2 способ - перекрестная проверка модели (cross validation)
 from sklearn.model_selection import cross_val_score
 # - Кросс-валидация по K блокам (K-fold cross-validation)
@@ -100,22 +113,19 @@ from sklearn.model_selection import cross_val_score
 # mat = confusion_matrix(y_test, y_model)
 
 
+# КОНВЕЙЕР (PIPELINE)
+# конвейер для различного количества степеней многочлена
+# from sklearn.preprocessing import PolynomialFeatures
+# from sklearn.linear_model import LinearRegression
+# from sklearn.pipeline import make_pipeline
+# def polynomial_regression(degree=2, **kwargs):
+#     return make_pipeline(PolynomialFeatures(degree), LinearRegression(**kwargs))
+# for degree in [1, 3, 5]:
+#     y_predict = polynomial_regression(degree).fit(x_train, y_train).predict(x_test)
+
+
 # Кривые обучения
 from sklearn.model_selection import validation_curve
 # train_score, val_score = validation_curve(model(), X, y, 'parameter', degree, cv=7)
 from sklearn.model_selection import learning_curve
 # train_score, val_score = learning_curve(model(), X, y, 'parameter', degree, cv=7)
-
-
-# Логистическая регрессия
-# from sklearn.linear_model import LogisticRegression
-# from sklearn.preprocessing import LabelEncoder
-# df_train = pd.read_csv('train.csv')
-# df_train['sex_cod'] = LabelEncoder().fit_transform(df_train.Sex)  # кодировка переменной (0, 1)
-# x_train = df_train.sex_cod.values.reshape(-1, 1)  # преобразование списка в список списков
-# y_train = df_train.Survived
-# logreg = LogisticRegression()
-# model = logreg.fit(x_train, y_train)
-# print(model.coef_)
-# print(model.intercept_)
-# offline.plot(create_histogram())
