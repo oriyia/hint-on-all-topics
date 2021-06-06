@@ -124,8 +124,9 @@ from sklearn.model_selection import cross_val_score
 #     y_predict = polynomial_regression(degree).fit(x_train, y_train).predict(x_test)
 
 
-# Кривые обучения
+# КРИВЫЕ ПРОВЕРКИ
 from sklearn.model_selection import validation_curve
-# train_score, val_score = validation_curve(model(), X, y, 'parameter', degree, cv=7)
+# train_score, val_score = validation_curve(polynomial_regression(), x, y, 'polynomialfeatures_degree', degree, cv=7)
+# КРИВЫЕ ОБУЧЕНИЯ
 from sklearn.model_selection import learning_curve
-# train_score, val_score = learning_curve(model(), X, y, 'parameter', degree, cv=7)
+# N, train_lc, val_lc = learning_curve(PolynomialRegression(degree), X, y, cv=7, train_sizes=np.linspace(0.3, 1, 25))
