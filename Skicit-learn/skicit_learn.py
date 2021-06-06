@@ -130,3 +130,15 @@ from sklearn.model_selection import validation_curve
 # КРИВЫЕ ОБУЧЕНИЯ
 from sklearn.model_selection import learning_curve
 # N, train_lc, val_lc = learning_curve(PolynomialRegression(degree), X, y, cv=7, train_sizes=np.linspace(0.3, 1, 25))
+
+# ПОИСК ПО СЕТКЕ
+# from sklearn.model_selection import GridSearchCV
+# param_grid = {'polynomialfeatures_degree': np.arange(21),
+#               'linearregression_fit_intercept': [True, False],
+#               'linearregression_normalize': [True, False]}
+# grid = GridSearchCV(polynomial_regression, param_grid, cv=7)
+# grid_fit = grid.fit(x_train, y_train)  # обучение модели
+# print(grid.best_params_)  # показать оптимальные значения параметров
+# model = grid.best_estimator_  # использование модели с лучшими найденными параметрами
+# model_fit = model.fit(x_train, y_train)  # обучение модели с оптимальными значениями параметров
+# y_predict = model_fit.predict(x_test)
