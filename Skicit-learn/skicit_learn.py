@@ -20,6 +20,35 @@ Scikit-Learn - ДОКУМЕНТАЦИЯ
   методов transform() или predict().
 """
 
+
+# ПРОЕКТИРОВАНИЕ ПРИЗНАКОВ
+
+# 1) КАТЕГОРИАЛЬНЫЕ ПРИЗНАКИ
+# from sklearn.feature_extraction import DictVectorizer
+# vec = DictVectorizer(sparse=False, dtype=int)
+# vec_fit = vec.fit_transform(data)  # кодирование категориальных признаков
+# print(vec_fit.get_features_names())  # вывод названий признаков
+
+# 2) ТЕКСТОВЫЕ ПРИЗНАКИ
+# from sklearn.feature_extraction.text import CountVectorizer
+# vec = CountVectorizer()
+# x = vec.fit_transform(sample)
+# table = pd.DataFrame(x.toarray(), columns=vec.get_feature_names())  # преобразование в обычную таблицу
+# придание каждому признаку веса в зависимости от частоты появления
+# from sklearn.feature_extraction.text import TfidfVectorizer
+# vec = TfidfVectorizer()
+# x = vec.fit_transform(sample)
+
+# КОНВЕЙЕР ПРИЗНАКОВ
+# from sklearn.pipeline import make_pipeline
+# поочередное выполнение функций
+# model = make_pipeline(Imputer(strategy='mean'),
+#                       PolynomialFeatures(degree=2),
+#                       LinearRegression())
+# model_fit = model.fit(x_train, y_train)
+# y_predict = model_fit.predict(y_test)
+
+
 # КОДИРОВКА ПЕРЕМЕННЫХ
 # from sklearn.preprocessing import LabelEncoder
 # codes = LabelEncoder().fit(df_train.Sex)  # создаем экземпляр класса и кодируем
