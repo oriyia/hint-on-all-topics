@@ -125,6 +125,7 @@ from sklearn.naive_bayes import GaussianNB  # выбираем класс мод
 
 
 # ОЦЕНКА ЭФФЕКТИВНОСТИ МОДЕЛИ (ОЦЕНКА ТОЧНОСТИ)
+# 1) ОЦЕНКА ЭФФЕКТИВНОСТИ ДЛЯ ЗАДАЧ РЕГРЕССИИ
 from sklearn.metrics import accuracy_score
 # 1 способ - обычная проверка
 # score = accuracy_score(y_true=y_test, y_pred=y_pred)
@@ -135,6 +136,10 @@ from sklearn.model_selection import cross_val_score
 # score.mean()
 # - Валидация последовательным случайным сэмплированием (random subsampling)
 # - Поэлементная кросс-валидация (Leave-one-out, LOO)
+# 2) ОЦЕНКА ЭФФЕКТИВНОСТИ ДЛЯ ЗАДАЧ КЛАССИФИКАЦИИ
+# - f-мера
+# from sklearn.metrics import f1_score
+# print(f1_score(y_predict, y_test))
 
 
 # МАТРИЦА РАЗЛИЧИЙ - для определения, где именно наша модель ошиблась

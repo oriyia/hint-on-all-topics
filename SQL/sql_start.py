@@ -21,6 +21,7 @@ def select_data(sql):
 
 
 print(select_data(sql_query))
+print('asdfas')
 
 # df = 'наш dataframe'
 
