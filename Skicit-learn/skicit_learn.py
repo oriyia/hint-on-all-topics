@@ -137,9 +137,12 @@ from sklearn.model_selection import cross_val_score
 # - Валидация последовательным случайным сэмплированием (random subsampling)
 # - Поэлементная кросс-валидация (Leave-one-out, LOO)
 # 2) ОЦЕНКА ЭФФЕКТИВНОСТИ ДЛЯ ЗАДАЧ КЛАССИФИКАЦИИ
+# точность - precision и полнота - recall
+# from sklearn.metrics import precision_score, recall_score
+# print(precision_score(y_test, y_prediction), recall_score(y_test, y_prediction))
 # - f-мера
 # from sklearn.metrics import f1_score
-# print(f1_score(y_predict, y_test))
+# print(f1_score(y_test, y_predict))
 
 
 # МАТРИЦА РАЗЛИЧИЙ - для определения, где именно наша модель ошиблась
