@@ -149,6 +149,9 @@ from sklearn.model_selection import cross_val_score
 # - roc-curve
 # from sklearn.metrics import roc_curve
 # fpr, tpr, threshoulds = roc_curve(y_test, y_predict)
+# - precision-recall curve
+# from sklearn.metrics import precision_recall_curve
+# precision, recall, thresholds = precision_recall_curve(y_test, y_predict)
 
 
 # МАТРИЦА РАЗЛИЧИЙ - для определения, где именно наша модель ошиблась
