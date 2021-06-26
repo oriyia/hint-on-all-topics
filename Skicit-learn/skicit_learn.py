@@ -136,6 +136,9 @@ from sklearn.model_selection import cross_val_score
 # score.mean()
 # - Валидация последовательным случайным сэмплированием (random subsampling)
 # - Поэлементная кросс-валидация (Leave-one-out, LOO)
+# - лучший предсказанные данные на кросс-валидации
+# from sklearn.model_selection import cross_val_predict
+# y_predict = cross_val_predict(model_fit, x_train, y_train, cv=3)
 # 2) ОЦЕНКА ЭФФЕКТИВНОСТИ ДЛЯ ЗАДАЧ КЛАССИФИКАЦИИ
 # точность - precision и полнота - recall
 # from sklearn.metrics import precision_score, recall_score
@@ -143,6 +146,9 @@ from sklearn.model_selection import cross_val_score
 # - f-мера
 # from sklearn.metrics import f1_score
 # print(f1_score(y_test, y_predict))
+# - roc-curve
+# from sklearn.metrics import roc_curve
+# fpr, tpr, threshoulds = roc_curve(y_test, y_predict)
 
 
 # МАТРИЦА РАЗЛИЧИЙ - для определения, где именно наша модель ошиблась
