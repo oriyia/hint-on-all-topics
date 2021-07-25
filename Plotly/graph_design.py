@@ -40,7 +40,7 @@ docs_theme = dict(
                                  orientation='h',
                                  # x=0.7,
                                  y=-0.2),
-                     paper_bgcolor='white',
+                     paper_bgcolor='#5c5c5c',
                      plot_bgcolor='white',
                      xaxis=dict(gridcolor='#dbdbdb',
                                 gridwidth=2,
@@ -247,7 +247,8 @@ def cumulative_distribution_function():
                        bgcolor="white",
                        opacity=0.8)
 
-
+    fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('cumulative_distribution_function'),
+                    scale=0.47)
 
 
 # logit_graph()

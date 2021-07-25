@@ -75,6 +75,56 @@ offline.plot(fig)
 x_axes = [0, 1, 2]
 y_axes = [0, 1, 2]
 
+# шаблон цветовой палитры
+temp_color = ['#4189c3', '#41c3a9', '#1ba672', '#6b737d', '#ffad38', '#ed5e73', '#c96dd0', '#4db2ff', '#825ec2']
+
+# настройки темы
+docs_theme = dict(
+    layout=go.Layout(colorway=temp_color,  # используемая цветовая схема
+                     title_font=dict(family="Helvetica",  # название графика
+                                     size=28,
+                                     color='#5c5c5c'),
+                     legend=dict(bordercolor='#e8e8e8',  # цвет обводки
+                                 borderwidth=2,  # толщина обводки
+                                 font=dict(family='Helvetica',  # шрифт легенды
+                                           size=22,  # размер шрифта
+                                           color='#5c5c5c'),  # цвет шрифта
+                                 orientation='h',  # ориентация легенды (h - горизонтальная)
+                                 # x=0.7,
+                                 y=-0.2),  # настройка положения относительно левого края
+                     paper_bgcolor='white',  # цвет подложки изображения
+                     plot_bgcolor='white',  # цвет подложки графика
+                     xaxis=dict(gridcolor='#dbdbdb',  # цвет у сетки
+                                gridwidth=2,  # толщина сетки
+                                zerolinecolor='#b8b8b8',  # цвет оси х
+                                zerolinewidth=4,  # толщина оси x
+                                title=dict(font_size=23,  # подпись оси x
+                                           font_color='#5c5c5c',
+                                           standoff=15,  # расстояние до графика
+                                           font_family='Helvetica'),
+                                tickfont=dict(family='Helvetica',  # подпись тиков
+                                              size=20,
+                                              color='#5c5c5c'),
+                                # обводка границ графика
+                                showline=True,  # показать обводку
+                                linewidth=1,  # толщина обводки
+                                linecolor='#b8b8b8',  # цвет обводки
+                                mirror=True  # полная обводка
+                                ),
+                     yaxis=dict(gridcolor='#dbdbdb',
+                                gridwidth=2,
+                                zerolinecolor='#b8b8b8',
+                                zerolinewidth=4,
+                                title=dict(font_size=23,
+                                           font_color='#5c5c5c',
+                                           font_family='Helvetica'),
+                                tickfont=dict(family='Helvetica',
+                                              size=20,
+                                              color='#5c5c5c'),
+                                showline=True, linewidth=1, linecolor='#b8b8b8', mirror=True),
+                     margin=dict(l=100, r=10, t=90, b=120),
+                     width=1367, height=617))  # 1367 617
+
 fig = px.line(module_statistics_group_count,
               x=module_statistics_group_count['mean'].values,
               y=module_statistics_group_count.index.get_level_values(1),
