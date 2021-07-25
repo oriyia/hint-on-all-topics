@@ -72,32 +72,89 @@ fig.update_yaxes(title='Ось Y графика 2', col=2, row=1)
 fig.update_traces(hoverinfo='all', hovertemplate='Аргумент: %{x}<br>Функция: %{y}')
 offline.plot(fig)
 
+x_axes = [0, 1, 2]
+y_axes = [0, 1, 2]
 
-fig5 = px.line(module_statistics_group_count,
-               x=module_statistics_group_count['mean'].values,
-               y=module_statistics_group_count.index.get_level_values(1),
-               facet_col=module_statistics_group_count.index.get_level_values(0),
-               facet_col_wrap=1,
-               labels=dict(x='Длительность', color='Курс', facet_col='Курс'),
-               color=module_statistics_group_count.index.get_level_values(0),
-               facet_row_spacing=0.025)  # расстояние между графиками по вертикали
-fig5.update_layout(title=dict(text='<b>Медианное время прохождения каждого модуля</b>', x=.5, xanchor="center"),  # название графика
-                   showlegend=False,
-                   height=2200,
-                   margin=dict(l=30, r=10, t=50, b=10))
-fig5.update_xaxes(fixedrange=True,  # размер графика по всей подложке
-                  tickfont_size=9,  # размер тиков
-                  showticklabels=True,  # показать все тики для express
-                  ticksuffix=' дн.',  # суффикс у тиков оси
-                  title=dict(text='Время выполнения',  # подпись оси х
-                             font=dict(size=10),  # размер шрифта
-                             standoff=1),  # расстояние до графика
-                  nticks=6,  # количество тиков
-                  tickangle=45,  # угол наклона тиков
-                  tickformat='% H ~% M ~% S.% 2f')  # «2016-10-13 09: 15: 23.456» ---> «09 ~ 15 ~ 23.46»
-fig5.update_yaxes(fixedrange=True,
-                  tickfont_size=9,
-                  side='right',  # сторона отображения тиков
-                  title=dict(text='Модули',  # подпись оси у
-                             font=dict(size=10)))  # размер шрифта
-fig5.update_traces(hovertemplate='<b>%{y}</b><br>Курс: %{facet_row}<br>Время выполнения: %{x}<extra></extra>')
+fig = px.line(module_statistics_group_count,
+              x=module_statistics_group_count['mean'].values,
+              y=module_statistics_group_count.index.get_level_values(1),
+              facet_col=module_statistics_group_count.index.get_level_values(0),
+              facet_col_wrap=1,
+              labels=dict(x='Длительность', color='Курс', facet_col='Курс'),
+              color=module_statistics_group_count.index.get_level_values(0),
+              facet_row_spacing=0.025)  # расстояние между графиками по вертикали
+
+# просто добавить фигуру
+fig.add_trace(go.Scatter(x=x_axes, y=y_axes,
+                         line=dict(width=8),
+                         name='beta0= -2, beta=0.8'))
+
+# точечный график
+fig.add_trace(go.Scatter(x=x_axes, y=y_axes, mode='markers',
+                         marker_size=12))
+
+# горизонтальная линия
+fig.add_hline(y=1,  # координата через которую проходит линия
+              line_dash='dash',  # тип линии (dash - пунктирная,
+              line=dict(color='#8a8a8a',
+                        width=5),
+              layer="below")  # слой (below - на заднем плане,
+
+fig.add_shape(type='line',  # добавить линию с указанием координат точек
+              x0=3, x1=10, y0=0, y1=2,
+              line=dict(width=8,
+                        color='grey'))
+
+fig.update_layout(title=dict(text='<b>Медианное время прохождения каждого модуля</b>',  # название графика
+                             x=.5,
+                             xanchor="center"),
+                  showlegend=False,  # не показывать легенду
+                  width=1200,  # ширина изображения, но не самого графика
+                  height=2200,  # высота изображения
+                  margin=dict(l=30, r=10, t=50, b=10),
+                  template='название темы')  # использование темы оформления
+
+fig.update_xaxes(fixedrange=True,  # размер графика по всей подложке
+                 tickfont_size=9,  # размер тиков
+                 showticklabels=True,  # показать все тики для express
+                 ticksuffix=' дн.',  # суффикс у тиков оси
+                 title=dict(text='$\Large{F_{X}}$',  # подпись оси x в Latex (\large{}, \Large{}, \huge{}, \Huge{})
+                            font=dict(size=10),  # размер шрифта
+                            standoff=1),  # расстояние до графика
+                 nticks=6,  # количество тиков
+                 tickangle=45,  # угол наклона тиков
+                 tickformat='% H ~% M ~% S.% 2f',  # «2016-10-13 09: 15: 23.456» ---> «09 ~ 15 ~ 23.46»
+                 range=[3, 15],  # область показа значений на графике
+                 )
+
+fig.update_yaxes(fixedrange=True,
+                 tickfont_size=9,
+                 side='right',  # сторона отображения тиков
+                 title=dict(text='Модули',  # подпись оси у
+                            font=dict(size=10)))  # размер шрифта
+
+fig.add_annotation(x=0, y=1,  # координаты точки для подпись
+                   text="Text annotation with arrow",  # сам текст подписи
+                   showarrow=True,  # со стрелкой
+                   font=dict(family='Helvetica',  # шрифт подписи
+                             size=25,
+                             color='grey'),
+                   arrowwidth=3,  # толщина стрелки
+                   arrowcolor='#757575',  # цвет стрелки
+                   arrowsize=1,  # размер самой стрелки (головки)
+                   ax=40,  # эти числа определяют положение текста относительно точки, и следовательно длину стрелки
+                   ay=-50,
+                   # подложка под подпись
+                   bordercolor="#c2c2c2",  # цвет рамки
+                   borderwidth=2,  # толщина рамки
+                   borderpad=9,  # расстояние от текста до рамки
+                   bgcolor="white",  # цвет подложки
+                   opacity=0.8)  # непрозрачность
+
+fig.update_traces(hovertemplate='<b>%{y}</b><br>Курс: %{facet_row}<br>Время выполнения: %{x}<extra></extra>')
+
+# экспорт изображения графика в папку на компе
+fig.write_image(r'D:\My\Programing\Graphs\Graphs_docs\{}.png'.format('cumulative_distribution_function'),
+                width=1200,  # ширина изображения
+                height=700,  # высота изображения
+                scale=0.47)  # масштаб сохранения
