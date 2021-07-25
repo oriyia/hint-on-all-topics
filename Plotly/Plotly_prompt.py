@@ -91,7 +91,18 @@ fig.add_trace(go.Scatter(x=x_axes, y=y_axes,
 
 # точечный график
 fig.add_trace(go.Scatter(x=x_axes, y=y_axes, mode='markers',
-                         marker_size=12))
+                         marker_size=20,  # размер маркеров
+                         marker_color="lightskyblue",  # цвет маркера
+                         marker_line_color="midnightblue",  # цвет обводки маркера
+                         marker_line_width=2,  # толщина обводки
+                         marker_symbol="x-dot",  # тип маркера
+                         ))
+
+# подпись точек на графике
+fig.add_trace(go.Scatter(mode="markers+text",
+                         x=[4, 8],
+                         y=[0.5, -0.5],
+                         text=["Point A", "Point B"]))
 
 # горизонтальная линия
 fig.add_hline(y=1,  # координата через которую проходит линия
