@@ -123,8 +123,16 @@ fig = px.line(module_statistics_group_count,
               color=module_statistics_group_count.index.get_level_values(0),
               facet_row_spacing=0.025)  # расстояние между графиками по вертикали
 
-# просто добавить фигуру
+# просто добавить фигуру c подписями точек
 fig.add_trace(go.Scatter(x=x_axes, y=y_axes,
+                         mode='lines+text',  # lines+text - линия и подпись точек (их не видно) (markers+text,
+                         # lines+markers+text)
+                         text=["Text G", "Text H", "Text I"],  # надписи
+                         textposition="bottom center",  # положение текста (outside, inside,
+                         texttemplate='%{text:.2s}',  # формат текста
+                         textfont=dict(family='Helvetica',  # настройка текста подписей точек
+                                       size=18,
+                                       color='grey'),
                          line=dict(width=8),
                          name='beta0= -2, beta=0.8'))
 
