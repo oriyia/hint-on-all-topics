@@ -29,7 +29,7 @@ import plotly.io as pio
 # docs_theme.layout.annotations = [
 #
 # ]
-temp_color = ['#41c3a9', '#4189c3', '#1ba672', '#6b737d', '#ffad38', '#ed5e73', '#c96dd0', '#4db2ff', '#825ec2']
+temp_color = ['#4189c3', '#41c3a9', '#1ba672', '#6b737d', '#ffad38', '#ed5e73', '#c96dd0', '#4db2ff', '#825ec2']
 
 docs_theme = dict(
     layout=go.Layout(colorway=temp_color,
@@ -141,83 +141,73 @@ def export_image_graph(dataframe, name):
 export_image_graph(df1, 'graph2')
 
 
+def sigmoid_graph():
+    """Логистическая функция (сигмоида)"""
+
+    y_axes = np.linspace(0.00001, 0.9999999, 100)
+    x_axes = np.log(y_axes / (1 - y_axes))
+
+    fig = go.Figure(go.Scatter(x=x_axes, y=y_axes,
+                               line=dict(width=8)))
+    fig.add_hline(y=1, line_dash='dash', line=dict(width=5, color='#8a8a8a'), layer='below')
+    fig.add_hline(y=0, line_dash='dash', line=dict(width=5, color='#8a8a8a'), layer='below')
+
+    fig.update_layout(title=dict(text='<b>Логистическая функция (сигмоида)</b>'),
+                      template=docs_theme)
+    fig.update_xaxes(range=[-5, 5],
+                     title=dict(text='y'))
+    fig.update_yaxes(title=dict(text='p'))
+
+    fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('sigmoid_graph'), scale=0.47)
 
 
-x_axes = np.linspace(0.00001, 0.9999999, 100)
-y_axes = np.log(x_axes / (1 - x_axes))
+def logit_graph():
+    """Типовой график logit(p) для диапазона [0,1] и основание e для логарифмирования"""
 
-df2 = pd.DataFrame({'x': x_axes, 'y': y_axes})
+    x_axes = np.linspace(0.00001, 0.9999999, 100)
+    y_axes = np.log(x_axes / (1 - x_axes))
 
-fig = go.Figure(go.Scatter(x=x_axes, y=y_axes,
-                           line=dict(width=7)))
+    fig = go.Figure(go.Scatter(x=x_axes, y=y_axes,
+                               line=dict(width=8)))
 
+    fig.update_layout(title=dict(text='<b>Типовой график logit(p) для диапазона [0,1] '
+                                      'и основание e для логарифмирования</b>'),
+                      template=docs_theme)
+    fig.update_xaxes(title=dict(text='p'))
+    fig.update_yaxes(range=[-5, 5],
+                     title=dict(text='logit(p)'))
 
-# fig.add_hline(y=1, line_dash='dash', line=dict(color='#8cc2ff'))
-# fig.add_hline(y=0, line_dash='dash', line=dict(color='#8cc2ff'))
-fig.update_layout(title=dict(text='<b>Типовой график logit(p) для диапазона [0,1] '
-                                  'и основание e для логарифмирования</b>'),
-                  template=docs_theme)
-fig.update_xaxes(title=dict(text='p'))
-fig.update_yaxes(range=[-5, 5],
-                 title=dict(text='logit(p)'))
-# offline.plot(fig)
-
-
-# fig.write_image(r"C:\Users\Ilya\Desktop\{}.png".format('logit'), scale=0.47)
+    fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('logit_graph'),
+                    width=1200, height=750, scale=0.47)
 
 
-x_axes = np.linspace(-70, 70, 140)
-y_axes1 = 1 / (1 + 2.7 ** (-(10 + 0.3 * x_axes)))
-y_axes2 = 1 / (1 + 2.7 ** (-(-2 + 0.8 * x_axes)))
-y_axes3 = 1 / (1 + 2.7 ** (-(10 + 0.8 * x_axes)))
-y_axes4 = 1 / (1 + 2.7 ** (-(20 + 0.8 * x_axes)))
-y_axes5 = 1 / (1 + 2.7 ** (-(30 + 0.8 * x_axes)))
-y_axes6 = 1 / (1 + 2.7 ** (-(40 + 0.8 * x_axes)))
-y_axes7 = 1 / (1 + 2.7 ** (-(50 + 0.8 * x_axes)))
-y_axes8 = 1 / (1 + 2.7 ** (-(-20 + 0.8 * x_axes)))
-y_axes9 = 1 / (1 + 2.7 ** (-(-30 + 0.8 * x_axes)))
+def log_graph_other_parameter():
+    """Логистические функции с разными параметрами"""
+
+    x_axes = np.linspace(-70, 70, 140)
+    y_axes1 = 1 / (1 + 2.7 ** (-(10 + 0.3 * x_axes)))
+    y_axes2 = 1 / (1 + 2.7 ** (-(-2 + 0.8 * x_axes)))
+
+    fig = go.Figure(go.Scatter(x=x_axes, y=y_axes1,
+                               line=dict(width=8),
+                               name='beta0=10, beta=0.3'))
+
+    fig.add_trace(go.Scatter(x=x_axes, y=y_axes2,
+                             line=dict(width=8),
+                             name='beta0= -2, beta=0.8'))
+
+    fig.add_hline(y=1, line_dash='dash', line=dict(color='#8a8a8a', width=5), layer="below")
+    fig.add_hline(y=0, line_dash='dash', line=dict(color='#8a8a8a', width=5), layer="below")
+
+    fig.update_layout(title=dict(text='<b>Логистические функции с разными параметрами</b>'),
+                      template=docs_theme)
+    fig.update_xaxes(title=dict(text='y'))
+    fig.update_yaxes(title=dict(text='p'))
+
+    fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('log_graph_other_parameter'), scale=0.47)
 
 
-fig = go.Figure(go.Scatter(x=x_axes, y=y_axes1,
-                           line=dict(width=8),
-                           name='beta0=10, beta=0.3'))
+# logit_graph()
+# log_graph_other_parameter()
+# sigmoid_graph()
 
-fig.add_trace(go.Scatter(x=x_axes, y=y_axes2,
-                         line=dict(width=8),
-                         name='beta0= -2, beta=0.8'))
-fig.add_trace(go.Scatter(x=x_axes, y=y_axes3,
-                         line=dict(width=8),
-                         name='beta0= -2, beta=0.8'))
-fig.add_trace(go.Scatter(x=x_axes, y=y_axes4,
-                         line=dict(width=8),
-                         name='beta0= -2, beta=0.8'))
-fig.add_trace(go.Scatter(x=x_axes, y=y_axes5,
-                         line=dict(width=8),
-                         name='beta0= -2, beta=0.8'))
-fig.add_trace(go.Scatter(x=x_axes, y=y_axes6,
-                         line=dict(width=8),
-                         name='beta0= -2, beta=0.8'))
-fig.add_trace(go.Scatter(x=x_axes, y=y_axes7,
-                         line=dict(width=8),
-                         name='beta0= -2, beta=0.8'))
-fig.add_trace(go.Scatter(x=x_axes, y=y_axes8,
-                         line=dict(width=8),
-                         name='beta0= -2, beta=0.8'))
-fig.add_trace(go.Scatter(x=x_axes, y=y_axes9,
-                         line=dict(width=8),
-                         name='beta0= -2, beta=0.8'))
-
-
-
-fig.add_hline(y=1, line_dash='dash', line=dict(color='#8a8a8a', width=5), layer="below")
-fig.add_hline(y=0, line_dash='dash', line=dict(color='#8a8a8a', width=5), layer="below")
-
-
-fig.update_layout(title=dict(text='<b>Логистические функции с разными параметрами</b>'),
-                  template=docs_theme)
-fig.update_xaxes(title=dict(text='y'))
-fig.update_yaxes(title=dict(text='p'))
-# offline.plot(fig)
-
-
-fig.write_image(r"C:\Users\Ilya\Desktop\{}.png".format('log_function_other_parameter'), scale=0.47)
