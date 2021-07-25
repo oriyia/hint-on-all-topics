@@ -2,30 +2,28 @@
 import plotly.offline as offline  # импорт для оффлайна
 from plotly.graph_objs import *  # импорт всех граф объекты
 import plotly.express as px
-# offline.init_notebook_mode()  # для использования в ноутбуке
-
 import numpy as np
 import pandas as pd
-
-# offline.plot([{
-#     'x': x,
-#     'y': f(x),
-# }])
-
-import plotly
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
-import numpy as np
-import pandas as pd
-x = np.arange(0, 150, 1)
+
+x_axes = [0, 1, 2]
+y_axes = [0, 1, 2]
+
 
 def f(x):
     return x**2
+
+
 def h(x):
     return np.sin(x)
+
+
 def g(x):
     return np.cos(x)
+
+
 def j(x):
     return np.tan(x)
 
@@ -44,9 +42,9 @@ fig.update_yaxes(range=[-0.5, 5], zeroline=True, zerolinewidth=2, zerolinecolor=
 fig.update_xaxes(range=[-0.5, 5], zeroline=True, zerolinewidth=2, zerolinecolor='#000',
                  col=2)  # область показа по x, аналогично
 
-fig.add_trace(go.Scatter(x=x, y=f(x), name='f(x)=x<sup>2</sup>', mode='lines+markers'), 1, 2)
-fig.add_trace(go.Scatter(x=x, y=t(x), name='f(x)=0.5x', mode='lines+markers',
-                         marker=dict(color=x, colorbar=dict(title='f(x)=x'),
+fig.add_trace(go.Scatter(x=x_axes, y=y_axes, name='f(x)=x<sup>2</sup>', mode='lines+markers'), 1, 2)
+fig.add_trace(go.Scatter(x=x_axes, y=y_axes, name='f(x)=0.5x', mode='lines+markers',
+                         marker=dict(color=x_axes, colorbar=dict(title='f(x)=x'),
                                      colorscale='Inferno', size=10*t(x))), 2, 2)
 fig.add_trace(go.Scatter(x=x, y=x, name='g(x)=x', mode='markers',
                          marker=dict(color='LightSkyBlue', size=10, line=dict(color='MediumPurple', width=2))), 1, 2)
@@ -57,14 +55,7 @@ fig.add_trace(go.Scatter(x=x, y=j(x), name='j(x)=tg(x)'), 1, 1)
 
 fig.update_layout(legend_orientation="h",  # внизу располагается легенда
                   legend=dict(x=.5, xanchor="center"),  # выравнивание легенды (по центру)
-                  margin=dict(l=0, r=0, t=60, b=0),  # настройка полей вокруг графика, сверху 30px
-                  # title='Grafic',  # общее название графика
-                  # xaxis_title='x Axis Title',  # подпись оси x
-                  # yaxis_title='y Axis Title',  # подпись оси y
-                  width=600,  # ширина
-                  height=1000,  # высота
                   hovermode='x')  # при наведении на один график, данные отображаются и по второму (по иксу)
-fig.update_layout(title='Plot Title')  # общее название графиков
 fig.update_xaxes(title='Ось Х графика 1', col=1, row=1)  # подписывание осей
 fig.update_xaxes(title='Ось Х графика 2', col=2, row=1)
 fig.update_yaxes(title='Ось Y графика 1', col=1, row=1)
@@ -72,15 +63,13 @@ fig.update_yaxes(title='Ось Y графика 2', col=2, row=1)
 fig.update_traces(hoverinfo='all', hovertemplate='Аргумент: %{x}<br>Функция: %{y}')
 offline.plot(fig)
 
-x_axes = [0, 1, 2]
-y_axes = [0, 1, 2]
 
 # шаблон цветовой палитры
-temp_color = ['#4189c3', '#41c3a9', '#1ba672', '#6b737d', '#ffad38', '#ed5e73', '#c96dd0', '#4db2ff', '#825ec2']
+theme_color = ['#4189c3', '#41c3a9', '#1ba672', '#6b737d', '#ffad38', '#ed5e73', '#c96dd0', '#4db2ff', '#825ec2']
 
 # настройки темы
 docs_theme = dict(
-    layout=go.Layout(colorway=temp_color,  # используемая цветовая схема
+    layout=go.Layout(colorway=theme_color,  # используемая цветовая схема
                      title_font=dict(family="Helvetica",  # название графика
                                      size=28,
                                      color='#5c5c5c'),
@@ -156,12 +145,17 @@ fig.add_trace(go.Scatter(mode="markers+text",
 
 # горизонтальная линия
 fig.add_hline(y=1,  # координата через которую проходит линия
-              line_dash='dash',  # тип линии (dash - пунктирная,
+              line_dash='dash',  # тип линии (dash - пунктирная, dot - точки
               line=dict(color='#8a8a8a',
                         width=5),
+              annotation_text='Подпись линии',
+              annotation_position='bottom right',  # положение подписи
+              annotation=dict(font=dict(family='Helvetica',
+                                        size=20,
+                                        color='grey')),
               layer="below")  # слой (below - на заднем плане,
 
-fig.add_shape(type='line',  # добавить линию с указанием координат точек
+fig.add_shape(type='line',  # добавить линию
               x0=3, x1=10, y0=0, y1=2,
               line=dict(width=8,
                         color='grey'))
@@ -176,11 +170,15 @@ fig.update_layout(title=dict(text='<b>Медианное время прохож
                   template='название темы')  # использование темы оформления
 
 fig.update_xaxes(fixedrange=True,  # размер графика по всей подложке
-                 tickfont_size=9,  # размер тиков
+                 tickfont=dict(family='Helvetica',
+                               size=15,  # размер тиков
+                               color='grey'),
                  showticklabels=True,  # показать все тики для express
                  ticksuffix=' дн.',  # суффикс у тиков оси
                  title=dict(text='$\Large{F_{X}}$',  # подпись оси x в Latex (\large{}, \Large{}, \huge{}, \Huge{})
-                            font=dict(size=10),  # размер шрифта
+                            font=dict(family='Helvetica',  # шрифт
+                                      size=10,  # размер шрифта
+                                      color='grey'),  # цвет
                             standoff=1),  # расстояние до графика
                  nticks=6,  # количество тиков
                  tickangle=45,  # угол наклона тиков
@@ -193,6 +191,37 @@ fig.update_yaxes(fixedrange=True,
                  side='right',  # сторона отображения тиков
                  title=dict(text='Модули',  # подпись оси у
                             font=dict(size=10)))  # размер шрифта
+
+# добавить вертикальную форму
+fig.add_vrect(x0=0.5, x1=2,  # начало и конец
+              annotation_text="decline",  # надпись
+              annotation_position="top left",  # позиция на форме
+              annotation=dict(font=dict(family="Helvetica",  # шрифт надписи
+                                        size=20,  # размер
+                                        color='grey')),
+              fillcolor="green",  # цвет формы (если убрать данный параметр, то будет прозрачная область)
+              opacity=0.25,  # прозрачность
+              line_width=0,
+              line_color='grey')  # толщина обводки
+
+# добавить овальную форму (область точек по максимуму и минимуму)
+fig.add_shape(type="circle",  # тип фигуры
+              xref="x", yref="y",
+              x0=min(x_axes), y0=min(y_axes),  # овал строится по 2-м точка прямоугольника, куда вписывается овал
+              x1=max(x_axes), y1=max(y_axes),  # 1 точка - левый нижний угол, 2 точка - правый верхний
+              opacity=0.2,
+              fillcolor="blue",
+              line_color="blue")
+
+# Добавить просто текст (координаты середины текста) 2 надписи в данной случае
+fig.add_trace(go.Scatter(
+    x=[2, 6], y=[1, 1],
+    text=["Line positioned relative to the plot",
+          "Line positioned relative to the axes"],
+    mode="text"))
+
+# добавить произвольную форму с заливкой
+fig.add_trace(go.Scatter(x=[0, 1, 2, 0], y=[0.2, 0.6, 0.2, 0.2], fill="toself"))
 
 fig.add_annotation(x=0, y=1,  # координаты точки для подпись
                    text="Text annotation with arrow",  # сам текст подписи

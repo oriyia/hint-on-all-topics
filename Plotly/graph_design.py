@@ -30,17 +30,17 @@ import plotly.io as pio
 #
 # ]
 
-temp_color = ['#4189c3', '#41c3a9', '#1ba672', '#6b737d', '#ffad38', '#ed5e73', '#c96dd0', '#4db2ff', '#825ec2']
+theme_color = ['#4189c3', '#41c3a9', '#1ba672', '#6b737d', '#ffad38', '#ed5e73', '#c96dd0', '#4db2ff', '#825ec2']
 
 docs_theme = dict(
-    layout=go.Layout(colorway=temp_color,
+    layout=go.Layout(colorway=theme_color,
                      title_font=dict(family="Helvetica", size=28, color='#5c5c5c'),
                      legend=dict(bordercolor='#e8e8e8', borderwidth=2,
                                  font=dict(family='Helvetica', size=22, color='#5c5c5c'),
                                  orientation='h',
                                  # x=0.7,
                                  y=-0.2),
-                     paper_bgcolor='#5c5c5c',
+                     paper_bgcolor='white',
                      plot_bgcolor='white',
                      xaxis=dict(gridcolor='#dbdbdb',
                                 gridwidth=2,
@@ -216,41 +216,44 @@ def cumulative_distribution_function():
 
     fig = go.Figure()
 
-    fig.add_shape(type='line', x0=-10, x1=0, y0=0, y1=0, line=dict(width=8, color=temp_color[0]))
-    fig.add_shape(type='line', x0=0, x1=1, y0=y_axes[1], y1=y_axes[1], line=dict(width=8, color=temp_color[0]))
-    fig.add_shape(type='line', x0=1, x1=2, y0=y_axes[2], y1=y_axes[2], line=dict(width=8, color=temp_color[0]))
-    fig.add_shape(type='line', x0=2, x1=3, y0=y_axes[3], y1=y_axes[3], line=dict(width=8, color=temp_color[0]))
-    fig.add_shape(type='line', x0=3, x1=10, y0=y_axes[4], y1=y_axes[4], line=dict(width=8, color=temp_color[0]))
+    fig.add_shape(type='line', x0=-10, x1=0, y0=0, y1=0, line=dict(width=8, color=theme_color[0]))
+    fig.add_shape(type='line', x0=0, x1=1, y0=y_axes[1], y1=y_axes[1], line=dict(width=8, color=theme_color[0]))
+    fig.add_shape(type='line', x0=1, x1=2, y0=y_axes[2], y1=y_axes[2], line=dict(width=8, color=theme_color[0]))
+    fig.add_shape(type='line', x0=2, x1=3, y0=y_axes[3], y1=y_axes[3], line=dict(width=8, color=theme_color[0]))
+    fig.add_shape(type='line', x0=3, x1=10, y0=y_axes[4], y1=y_axes[4], line=dict(width=8, color=theme_color[0]))
 
     fig.update_layout(title=dict(text='<b>Функция распределения для ДСВ</b>'),
                       template=docs_theme)
     fig.update_xaxes(range=[-1, 4],
-                     title=dict(text='x'))
+                     title=dict(text='$\Large{x}$'))
     fig.update_yaxes(range=[-0.1, 1.1],
                      title=dict(text='$\Large{F_{X}}$',  # размер \large{}, \Large{}, \huge{}, \Huge{}
                                 font_size=30))
 
-    fig.add_annotation(x=0, y=y_axes[1],  # для какой точки подпись
-                       text="Text annotation with arrow",  # сам текст подписи
-                       showarrow=True,  # со стрелкой
-                       font=dict(family='Helvetica',  # шрифт подписи
-                                 size=25,
-                                 color=temp_color[0]),
-                       arrowwidth=3,  # толщина стрелки
-                       arrowcolor='#757575',
-                       arrowsize=1,  # размер самой стрелки (головки)
-                       ax=40,  # эти числа определяют положение текста, и следовательно длину стрелки
-                       ay=-50,
-                       bordercolor="#c2c2c2",
-                       borderwidth=2,
-                       borderpad=9,
-                       bgcolor="white",
-                       opacity=0.8)
 
     fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('cumulative_distribution_function'),
                     scale=0.47)
 
 
+def example():
+    fig = go.Figure()
+    x = [0, 1, 2]
+    y1 = [0, 1, 2]
+    y2 = [2, 3, 4]
+    fig.add_trace(go.Scatter(x=x, y=y1))
+    fig.add_trace(go.Scatter(x=x, y=y2))
+    fig.update_layout(width=1360,
+                      height=710)
+    fig.update_xaxes(title=dict(text='Название оси Х',
+                                font=dict(family='Helvetica',
+                                          size=25,
+                                          color='grey')),
+                     )
+
+    fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('example'),
+                    scale=0.47)
+
+# example()
 # logit_graph()
 # log_graph_other_parameter()
 # sigmoid_graph()
