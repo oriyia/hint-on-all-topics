@@ -172,7 +172,6 @@ match = re.search(r'(?P<key>\w+)=(?P<value>#[\da-fA-F]{6})\b', text)
 #     print(match)
 
 
-
 # ВЕКТОРИЗАЦИЯ ТЕКСТА
 corpus = []
 # regular_expr = r'\w+'  # разбивка текста на слова
