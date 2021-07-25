@@ -29,9 +29,10 @@ import plotly.io as pio
 # docs_theme.layout.annotations = [
 #
 # ]
-temp_color = ['#687386', '#586ada', '#0579b7', '#09815c', '#bb5505', '#c44b35', '#cd3d64', '#a44eb4', '#825ec2']
+temp_color = ['#41c3a9', '#4189c3', '#1ba672', '#6b737d', '#ffad38', '#ed5e73', '#c96dd0', '#4db2ff', '#825ec2']
+
 docs_theme = dict(
-    layout=go.Layout(colorway=['#41c3a9', '#415bc3', '#6e41c3','#4189c3'],
+    layout=go.Layout(colorway=temp_color,
                      title_font=dict(family="Helvetica", size=28, color='#5c5c5c'),
                      legend=dict(bordercolor='#e8e8e8', borderwidth=2,
                                  font=dict(family='Helvetica', size=22, color='#5c5c5c'),
@@ -165,20 +166,17 @@ fig.update_yaxes(range=[-5, 5],
 # fig.write_image(r"C:\Users\Ilya\Desktop\{}.png".format('logit'), scale=0.47)
 
 
-
 x_axes = np.linspace(-70, 70, 140)
 y_axes1 = 1 / (1 + 2.7 ** (-(10 + 0.3 * x_axes)))
 y_axes2 = 1 / (1 + 2.7 ** (-(-2 + 0.8 * x_axes)))
-y_axes3 = 1 / (1 + 2.7 ** (-(-3 + 0.8 * x_axes)))
-y_axes4 = 1 / (1 + 2.7 ** (-(-2 + 0.8 * x_axes)))
-y_axes5 = 1 / (1 + 2.7 ** (-(-2 + 0.8 * x_axes)))
-y_axes6 = 1 / (1 + 2.7 ** (-(-2 + 0.8 * x_axes)))
-y_axes7 = 1 / (1 + 2.7 ** (-(-2 + 0.8 * x_axes)))
-y_axes8 = 1 / (1 + 2.7 ** (-(-2 + 0.8 * x_axes)))
-y_axes9 = 1 / (1 + 2.7 ** (-(-2 + 0.8 * x_axes)))
-y_axes10 = 1 / (1 + 2.7 ** (-(-2 + 0.8 * x_axes)))
+y_axes3 = 1 / (1 + 2.7 ** (-(10 + 0.8 * x_axes)))
+y_axes4 = 1 / (1 + 2.7 ** (-(20 + 0.8 * x_axes)))
+y_axes5 = 1 / (1 + 2.7 ** (-(30 + 0.8 * x_axes)))
+y_axes6 = 1 / (1 + 2.7 ** (-(40 + 0.8 * x_axes)))
+y_axes7 = 1 / (1 + 2.7 ** (-(50 + 0.8 * x_axes)))
+y_axes8 = 1 / (1 + 2.7 ** (-(-20 + 0.8 * x_axes)))
+y_axes9 = 1 / (1 + 2.7 ** (-(-30 + 0.8 * x_axes)))
 
-df2 = pd.DataFrame({'x': x_axes, 'y1': y_axes1, 'y2': y_axes2})
 
 fig = go.Figure(go.Scatter(x=x_axes, y=y_axes1,
                            line=dict(width=8),
@@ -187,18 +185,33 @@ fig = go.Figure(go.Scatter(x=x_axes, y=y_axes1,
 fig.add_trace(go.Scatter(x=x_axes, y=y_axes2,
                          line=dict(width=8),
                          name='beta0= -2, beta=0.8'))
+fig.add_trace(go.Scatter(x=x_axes, y=y_axes3,
+                         line=dict(width=8),
+                         name='beta0= -2, beta=0.8'))
+fig.add_trace(go.Scatter(x=x_axes, y=y_axes4,
+                         line=dict(width=8),
+                         name='beta0= -2, beta=0.8'))
+fig.add_trace(go.Scatter(x=x_axes, y=y_axes5,
+                         line=dict(width=8),
+                         name='beta0= -2, beta=0.8'))
+fig.add_trace(go.Scatter(x=x_axes, y=y_axes6,
+                         line=dict(width=8),
+                         name='beta0= -2, beta=0.8'))
+fig.add_trace(go.Scatter(x=x_axes, y=y_axes7,
+                         line=dict(width=8),
+                         name='beta0= -2, beta=0.8'))
+fig.add_trace(go.Scatter(x=x_axes, y=y_axes8,
+                         line=dict(width=8),
+                         name='beta0= -2, beta=0.8'))
+fig.add_trace(go.Scatter(x=x_axes, y=y_axes9,
+                         line=dict(width=8),
+                         name='beta0= -2, beta=0.8'))
+
 
 
 fig.add_hline(y=1, line_dash='dash', line=dict(color='#8a8a8a', width=5), layer="below")
 fig.add_hline(y=0, line_dash='dash', line=dict(color='#8a8a8a', width=5), layer="below")
-fig.add_hline(y=0.9, line=dict(color='#6e41c3', width=7))
-fig.add_hline(y=0.8, line=dict(color='#c341b8', width=7))
-fig.add_hline(y=0.7, line=dict(color='#c34179', width=7))
-fig.add_hline(y=0.6, line=dict(color='#c34141', width=7))
-fig.add_hline(y=0.5, line=dict(color='#e39e44', width=7))
-fig.add_hline(y=0.4, line=dict(color='#e3e344', width=7))
-fig.add_hline(y=0.3, line=dict(color='#a3e344', width=7))
-fig.add_hline(y=0.2, line=dict(color='#44e347', width=7))
+
 
 fig.update_layout(title=dict(text='<b>Логистические функции с разными параметрами</b>'),
                   template=docs_theme)
