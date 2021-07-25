@@ -129,13 +129,15 @@ fig.add_trace(go.Scatter(x=x_axes, y=y_axes,
                          name='beta0= -2, beta=0.8'))
 
 # точечный график
+# https://plotly.com/python/marker-style/ - посмотреть остальные типы маркера
 fig.add_trace(go.Scatter(x=x_axes, y=y_axes, mode='markers',
-                         marker_size=20,  # размер маркеров
-                         marker_color="lightskyblue",  # цвет маркера
-                         marker_line_color="midnightblue",  # цвет обводки маркера
-                         marker_line_width=2,  # толщина обводки
-                         marker_symbol="x-dot",  # тип маркера
-                         ))
+                         marker=dict(size=35,  # размер маркера
+                                     line=dict(width=5,  # толщина обводки
+                                               color='DarkSlateGrey'),  # цвет обводки
+                                     color='LightSkyBlue',  # цвет маркера
+                                     opacity=0.8,  # непрозрачность маркера
+                                     symbol='square-dot'),  # тип маркера
+                         opacity=0.9))
 
 # подпись точек на графике
 fig.add_trace(go.Scatter(mode="markers+text",

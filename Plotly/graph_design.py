@@ -230,7 +230,6 @@ def cumulative_distribution_function():
                      title=dict(text='$\Large{F_{X}}$',  # размер \large{}, \Large{}, \huge{}, \Huge{}
                                 font_size=30))
 
-
     fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('cumulative_distribution_function'),
                     scale=0.47)
 
@@ -239,9 +238,14 @@ def example():
     fig = go.Figure()
     x = [0, 1, 2]
     y1 = [0, 1, 2]
-    y2 = [2, 3, 4]
-    fig.add_trace(go.Scatter(x=x, y=y1))
-    fig.add_trace(go.Scatter(x=x, y=y2))
+    fig.add_trace(go.Scatter(x=x, y=y1, mode='markers',
+                             marker=dict(size=35,
+                                         line=dict(width=5,
+                                                   color='DarkSlateGrey'),
+                                         color='LightSkyBlue',
+                                         opacity=0.8,
+                                         symbol='square-dot'),
+                             opacity=0.9))
     fig.update_layout(width=1360,
                       height=710)
     fig.update_xaxes(title=dict(text='Название оси Х',
@@ -253,9 +257,9 @@ def example():
     fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('example'),
                     scale=0.47)
 
-# example()
+example()
 # logit_graph()
 # log_graph_other_parameter()
 # sigmoid_graph()
-cumulative_distribution_function()
+# cumulative_distribution_function()
 
