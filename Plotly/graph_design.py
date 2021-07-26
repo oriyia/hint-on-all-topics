@@ -229,23 +229,49 @@ def log_graph_other_parameter():
     y_axes1 = 1 / (1 + 2.7 ** (-(10 + 0.3 * x_axes)))
     y_axes2 = 1 / (1 + 2.7 ** (-(-2 + 0.8 * x_axes)))
 
-    fig = go.Figure(go.Scatter(x=x_axes, y=y_axes1,
-                               line=dict(width=8),
-                               name='beta0=10, beta=0.3'))
+    fig = go.Figure(go.Scatter(
+        x=x_axes, y=y_axes1,
+        line=dict(width=8),
+        name='beta0=10, beta=0.3'),
+    )
 
-    fig.add_trace(go.Scatter(x=x_axes, y=y_axes2,
-                             line=dict(width=8),
-                             name='beta0= -2, beta=0.8'))
+    fig.add_trace(go.Scatter(
+        x=x_axes, y=y_axes2,
+        line=dict(width=8),
+        name='beta0= -2, beta=0.8'),
+    )
 
-    fig.add_hline(y=1, line_dash='dash', line=dict(color='#8a8a8a', width=5), layer="below")
-    fig.add_hline(y=0, line_dash='dash', line=dict(color='#8a8a8a', width=5), layer="below")
+    fig.add_hline(
+        y=1,
+        line_dash='dash',
+        line=dict(color='#8a8a8a', width=5),
+        layer="below",
+    )
 
-    fig.update_layout(title=dict(text='<b>Логистические функции с разными параметрами</b>'),
-                      template=docs_theme)
-    fig.update_xaxes(title=dict(text='y'))
-    fig.update_yaxes(title=dict(text='p'))
+    fig.add_hline(
+        y=0,
+        line_dash='dash',
+        line=dict(color='#8a8a8a', width=5),
+        layer="below",
+    )
 
-    fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('log_graph_other_parameter'), scale=0.47)
+    fig.update_layout(
+        title=dict(text='<b>Логистические функции с разными параметрами</b>'),
+        template=docs_theme,
+    )
+
+    fig.update_xaxes(
+        title=dict(text='y'),
+    )
+
+    fig.update_yaxes(
+        title=dict(text='p'),
+    )
+
+    fig.write_image(
+        r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('log_graph_other_parameter'),
+        scale=0.47,
+    )
 
 
 def cumulative_distribution_function():
