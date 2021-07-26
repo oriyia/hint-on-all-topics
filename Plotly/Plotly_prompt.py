@@ -185,6 +185,7 @@ fig.update_xaxes(fixedrange=True,  # размер графика по всей �
                                color='grey'),
                  showticklabels=True,  # показать все тики для express
                  ticksuffix=' дн.',  # суффикс у тиков оси
+                 tickprefix="$",  # приставка у тиков оси
                  title=dict(text='$\Large{F_{X}}$',  # подпись оси x в Latex (\large{}, \Large{}, \huge{}, \Huge{})
                             font=dict(family='Helvetica',  # шрифт
                                       size=10,  # размер шрифта
@@ -194,6 +195,8 @@ fig.update_xaxes(fixedrange=True,  # размер графика по всей �
                  tickangle=45,  # угол наклона тиков
                  tickformat='% H ~% M ~% S.% 2f',  # «2016-10-13 09: 15: 23.456» ---> «09 ~ 15 ~ 23.46»
                  range=[3, 15],  # область показа значений на графике
+                 visible=False,  # скрыть оси у графика
+                 mirrir='ticks'
                  )
 
 fig.update_yaxes(fixedrange=True,

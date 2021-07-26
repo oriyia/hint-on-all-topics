@@ -21,9 +21,7 @@ y_predict = poly_model.predict(x[:, np.newaxis])
 
 df1 = pd.DataFrame({'x': x, 'y': y, 'y_predict': y_predict})
 
-
 import plotly.io as pio
-
 
 # docs_theme = go.layout.Template()
 # docs_theme.layout.annotations = [
@@ -66,15 +64,19 @@ docs_theme = dict(
                                               color='#5c5c5c'),
                                 showline=True, linewidth=1, linecolor='#b8b8b8', mirror=True),
                      margin=dict(l=100, r=10, t=90, b=120),
-                     width=1367, height=617))  # 1367 617
+                     width=1367, height=617,
+                     )
+)
 
 
 def create_graph(dataframe):
     fig = go.Figure()
 
-    # fig = px.scatter(dataframe, x="x", y="y")
-    fig.add_trace(go.Scatter(x=dataframe.x, y=dataframe.y, mode='markers',
-                             marker_size=12))
+    fig.add_trace(go.Scatter(
+        x=dataframe.x, y=dataframe.y,
+        mode='markers',
+        marker_size=12,
+    ))
 
     fig.add_trace(go.Scatter(x=dataframe.x, y=dataframe.y_predict,
                              line=dict(width=7)))
@@ -148,18 +150,43 @@ def sigmoid_graph():
     y_axes = np.linspace(0.00001, 0.9999999, 100)
     x_axes = np.log(y_axes / (1 - y_axes))
 
-    fig = go.Figure(go.Scatter(x=x_axes, y=y_axes,
-                               line=dict(width=8)))
-    fig.add_hline(y=1, line_dash='dash', line=dict(width=5, color='#8a8a8a'), layer='below')
-    fig.add_hline(y=0, line_dash='dash', line=dict(width=5, color='#8a8a8a'), layer='below')
+    fig = go.Figure(go.Scatter(
+        x=x_axes, y=y_axes,
+        line=dict(width=8),
+    ))
 
-    fig.update_layout(title=dict(text='<b>Логистическая функция (сигмоида)</b>'),
-                      template=docs_theme)
-    fig.update_xaxes(range=[-5, 5],
-                     title=dict(text='y'))
-    fig.update_yaxes(title=dict(text='p'))
+    fig.add_hline(
+        y=1,
+        line_dash='dash',
+        line=dict(width=5, color='#8a8a8a'),
+        layer='below',
+    )
 
-    fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('sigmoid_graph'), scale=0.47)
+    fig.add_hline(
+        y=0,
+        line_dash='dash',
+        line=dict(width=5, color='#8a8a8a'),
+        layer='below',
+    )
+
+    fig.update_layout(
+        title=dict(text='<b>Логистическая функция (сигмоида)</b>'),
+        template=docs_theme,
+    )
+
+    fig.update_xaxes(
+        range=[-5, 5],
+        title=dict(text='y'),
+    )
+
+    fig.update_yaxes(
+        title=dict(text='p'),
+    )
+
+    fig.write_image(
+        r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('sigmoid_graph'),
+        scale=0.47,
+    )
 
 
 def logit_graph():
@@ -168,18 +195,31 @@ def logit_graph():
     x_axes = np.linspace(0.00001, 0.9999999, 100)
     y_axes = np.log(x_axes / (1 - x_axes))
 
-    fig = go.Figure(go.Scatter(x=x_axes, y=y_axes,
-                               line=dict(width=8)))
+    fig = go.Figure(go.Scatter(
+        x=x_axes, y=y_axes,
+        line=dict(width=8),
+    ))
 
-    fig.update_layout(title=dict(text='<b>Типовой график logit(p) для диапазона [0,1] '
-                                      'и основание e для логарифмирования</b>'),
-                      template=docs_theme)
-    fig.update_xaxes(title=dict(text='p'))
-    fig.update_yaxes(range=[-5, 5],
-                     title=dict(text='logit(p)'))
+    fig.update_layout(
+        title=dict(text='<b>Типовой график logit(p) для диапазона [0,1] и основание e для логарифмирования</b>'),
+        template=docs_theme,
+    )
 
-    fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('logit_graph'),
-                    width=1200, height=750, scale=0.47)
+    fig.update_xaxes(
+        title=dict(text='p')
+    )
+
+    fig.update_yaxes(
+        range=[-5, 5],
+        title=dict(text='logit(p)')
+    )
+
+    fig.write_image(
+        r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('logit_graph'),
+        width=1200,
+        height=750,
+        scale=0.47,
+    )
 
 
 def log_graph_other_parameter():
@@ -211,10 +251,13 @@ def log_graph_other_parameter():
 def cumulative_distribution_function():
     """Функция распределения для ДСВ"""
 
-    y_axes = [0, 27/64, 54/64, 63/64, 1]
+    y_axes = [0, 27 / 64, 0.7, 0.9, 1]
     x_axes = [0, 1, 2, 3, 4]
 
     fig = go.Figure()
+
+    fig.add_trace(go.Scatter(x=x_axes[:-1], y=y_axes[1:], mode='markers',
+                             marker=dict(size=17)))
 
     fig.add_shape(type='line', x0=-10, x1=0, y0=0, y1=0, line=dict(width=8, color=theme_color[0]))
     fig.add_shape(type='line', x0=0, x1=1, y0=y_axes[1], y1=y_axes[1], line=dict(width=8, color=theme_color[0]))
@@ -231,7 +274,43 @@ def cumulative_distribution_function():
                                 font_size=30))
 
     fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('cumulative_distribution_function'),
-                    scale=0.47)
+                    width=700, scale=0.47)
+
+
+def distribution_function_properties():
+    """Функция распределения и ее свойства"""
+
+    y_axes = np.linspace(0.00001, 0.9999999, 100)
+    x_axes = np.log(y_axes / (1 - y_axes)) + 3
+
+    fig = go.Figure(go.Scatter(x=x_axes[:30], y=y_axes[:30],
+                               line=dict(width=8)))
+    fig.add_trace(go.Scatter(x=x_axes[60:], y=y_axes[60:],
+                             line=dict(width=8, color=theme_color[0])))
+    fig.add_trace(go.Scatter(x=[x_axes[60]], y=[y_axes[60]], mode='markers',
+                             marker=dict(size=17,
+                                         color=theme_color[0])))
+    fig.add_shape(x0=x_axes[30], x1=x_axes[60], y0=0.5, y1=0.5,
+                  line=dict(width=8,
+                            color=theme_color[0]))
+    fig.add_trace(go.Scatter(x=[x_axes[30]], y=[0.5], mode='markers',
+                             marker=dict(size=17,
+                                         color=theme_color[0])))
+    fig.add_hline(y=1, line_dash='dash', line=dict(width=5, color='#8a8a8a'), layer='below')
+    fig.add_hline(y=0, line_dash='dash', line=dict(width=5, color='#8a8a8a'), layer='below')
+
+    fig.update_layout(title=dict(text='<b>Функция распределения и ее свойства</b>'),
+                      template=docs_theme,
+                      showlegend=False)
+    fig.update_xaxes(range=[-2, 7],
+                     title=dict(text='$\Large{x}$'))
+    fig.update_yaxes(title=dict(text='$\Large{F_{X}}$'),
+                     range=[0.1, 1.1],
+                     visible=False
+                     )
+
+    fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('distribution_function_properties'),
+                    width=800, scale=0.47)
 
 
 def example():
@@ -247,19 +326,28 @@ def example():
                                          symbol='square-dot'),
                              opacity=0.9))
     fig.update_layout(width=1360,
-                      height=710)
-    fig.update_xaxes(title=dict(text='Название оси Х',
+                      height=710,
+                      template=docs_theme,
+                      hovermode='closest')
+    fig.update_xaxes(title=dict(text='Название оси Х dd',
                                 font=dict(family='Helvetica',
                                           size=25,
                                           color='grey')),
+                     showspikes=True,
+                     spikemode='across',
+                     spikecolor='black',
+                     spikethickness=10,
+                     showline=True,
+                     linewidth=10
                      )
 
     fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('example'),
                     scale=0.47)
 
-example()
+
+# example()
 # logit_graph()
 # log_graph_other_parameter()
 # sigmoid_graph()
 # cumulative_distribution_function()
-
+distribution_function_properties()
