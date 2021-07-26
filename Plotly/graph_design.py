@@ -282,25 +282,64 @@ def cumulative_distribution_function():
 
     fig = go.Figure()
 
-    fig.add_trace(go.Scatter(x=x_axes[:-1], y=y_axes[1:], mode='markers',
-                             marker=dict(size=17)))
+    fig.add_trace(go.Scatter(
+        x=x_axes[:-1], y=y_axes[1:],
+        mode='markers',
+        marker=dict(size=17),
+    ))
 
-    fig.add_shape(type='line', x0=-10, x1=0, y0=0, y1=0, line=dict(width=8, color=theme_color[0]))
-    fig.add_shape(type='line', x0=0, x1=1, y0=y_axes[1], y1=y_axes[1], line=dict(width=8, color=theme_color[0]))
-    fig.add_shape(type='line', x0=1, x1=2, y0=y_axes[2], y1=y_axes[2], line=dict(width=8, color=theme_color[0]))
-    fig.add_shape(type='line', x0=2, x1=3, y0=y_axes[3], y1=y_axes[3], line=dict(width=8, color=theme_color[0]))
-    fig.add_shape(type='line', x0=3, x1=10, y0=y_axes[4], y1=y_axes[4], line=dict(width=8, color=theme_color[0]))
+    fig.add_shape(
+        type='line',
+        x0=-10, x1=0, y0=0, y1=0,
+        line=dict(width=8, color=theme_color[0]),
+    )
 
-    fig.update_layout(title=dict(text='<b>Функция распределения для ДСВ</b>'),
-                      template=docs_theme)
-    fig.update_xaxes(range=[-1, 4],
-                     title=dict(text='$\Large{x}$'))
-    fig.update_yaxes(range=[-0.1, 1.1],
-                     title=dict(text='$\Large{F_{X}}$',  # размер \large{}, \Large{}, \huge{}, \Huge{}
-                                font_size=30))
+    fig.add_shape(
+        type='line',
+        x0=0, x1=1, y0=y_axes[1], y1=y_axes[1],
+        line=dict(width=8, color=theme_color[0]),
+    )
 
-    fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('cumulative_distribution_function'),
-                    width=700, scale=0.47)
+    fig.add_shape(
+        type='line',
+        x0=1, x1=2, y0=y_axes[2], y1=y_axes[2],
+        line=dict(width=8, color=theme_color[0]),
+    )
+
+    fig.add_shape(
+        type='line',
+        x0=2, x1=3, y0=y_axes[3], y1=y_axes[3],
+        line=dict(width=8, color=theme_color[0]),
+    )
+
+    fig.add_shape(
+        type='line',
+        x0=3, x1=10, y0=y_axes[4], y1=y_axes[4],
+        line=dict(width=8, color=theme_color[0]),
+    )
+
+    fig.update_layout(
+        title=dict(text='<b>Функция распределения для ДСВ</b>'),
+        template=docs_theme,
+    )
+
+    fig.update_xaxes(
+        range=[-1, 4],
+        title=dict(text='$\Large{x}$'),
+    )
+
+    fig.update_yaxes(
+        range=[-0.1, 1.1],
+        title=dict(
+            text='$\Large{F_{X}}$',  # размер \large{}, \Large{}, \huge{}, \Huge{}
+            font_size=30),
+    )
+
+    fig.write_image(
+        r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('cumulative_distribution_function'),
+        width=700,
+        scale=0.47,
+    )
 
 
 def distribution_function_properties():
@@ -309,66 +348,117 @@ def distribution_function_properties():
     y_axes = np.linspace(0.00001, 0.9999999, 100)
     x_axes = np.log(y_axes / (1 - y_axes)) + 3
 
-    fig = go.Figure(go.Scatter(x=x_axes[:30], y=y_axes[:30],
-                               line=dict(width=8)))
-    fig.add_trace(go.Scatter(x=x_axes[60:], y=y_axes[60:],
-                             line=dict(width=8, color=theme_color[0])))
-    fig.add_trace(go.Scatter(x=[x_axes[60]], y=[y_axes[60]], mode='markers',
-                             marker=dict(size=17,
-                                         color=theme_color[0])))
-    fig.add_shape(x0=x_axes[30], x1=x_axes[60], y0=0.5, y1=0.5,
-                  line=dict(width=8,
-                            color=theme_color[0]))
-    fig.add_trace(go.Scatter(x=[x_axes[30]], y=[0.5], mode='markers',
-                             marker=dict(size=17,
-                                         color=theme_color[0])))
-    fig.add_hline(y=1, line_dash='dash', line=dict(width=5, color='#8a8a8a'), layer='below')
-    fig.add_hline(y=0, line_dash='dash', line=dict(width=5, color='#8a8a8a'), layer='below')
+    fig = go.Figure(go.Scatter(
+        x=x_axes[:30], y=y_axes[:30],
+        line=dict(width=8),
+    ))
 
-    fig.update_layout(title=dict(text='<b>Функция распределения и ее свойства</b>'),
-                      template=docs_theme,
-                      showlegend=False)
-    fig.update_xaxes(range=[-2, 7],
-                     title=dict(text='$\Large{x}$'))
-    fig.update_yaxes(title=dict(text='$\Large{F_{X}}$'),
-                     range=[0.1, 1.1],
-                     visible=False
-                     )
+    fig.add_trace(go.Scatter(
+        x=x_axes[60:], y=y_axes[60:],
+        line=dict(width=8, color=theme_color[0]),
+    ))
 
-    fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('distribution_function_properties'),
-                    width=800, scale=0.47)
+    fig.add_trace(go.Scatter(
+        x=[x_axes[60]], y=[y_axes[60]],
+        mode='markers',
+        marker=dict(size=17, color=theme_color[0]),
+    ))
+
+    fig.add_shape(
+        x0=x_axes[30], x1=x_axes[60], y0=0.5, y1=0.5,
+        line=dict(width=8, color=theme_color[0]),
+    )
+
+    fig.add_trace(go.Scatter(
+        x=[x_axes[30]], y=[0.5],
+        mode='markers',
+        marker=dict(size=17, color=theme_color[0]),
+    ))
+
+    fig.add_hline(
+        y=1,
+        line_dash='dash',
+        line=dict(width=5, color='#8a8a8a'),
+        layer='below',
+    )
+
+    fig.add_hline(
+        y=0,
+        line_dash='dash',
+        line=dict(width=5, color='#8a8a8a'),
+        layer='below',
+    )
+
+    fig.update_layout(
+        title=dict(text='<b>Функция распределения и ее свойства</b>'),
+        template=docs_theme,
+        showlegend=False,
+    )
+
+    fig.update_xaxes(
+        range=[-2, 7],
+        title=dict(text='$\Large{x}$'),
+    )
+
+    fig.update_yaxes(
+        title=dict(text='$\Large{F_{X}}$'),
+        range=[0.1, 1.1],
+        visible=False,
+    )
+
+    fig.write_image(
+        r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('distribution_function_properties'),
+        width=800,
+        scale=0.47,
+    )
 
 
 def example():
+
     fig = go.Figure()
+
     x = [0, 1, 2]
     y1 = [0, 1, 2]
-    fig.add_trace(go.Scatter(x=x, y=y1, mode='markers',
-                             marker=dict(size=35,
-                                         line=dict(width=5,
-                                                   color='DarkSlateGrey'),
-                                         color='LightSkyBlue',
-                                         opacity=0.8,
-                                         symbol='square-dot'),
-                             opacity=0.9))
-    fig.update_layout(width=1360,
-                      height=710,
-                      template=docs_theme,
-                      hovermode='closest')
-    fig.update_xaxes(title=dict(text='Название оси Х dd',
-                                font=dict(family='Helvetica',
-                                          size=25,
-                                          color='grey')),
-                     showspikes=True,
-                     spikemode='across',
-                     spikecolor='black',
-                     spikethickness=10,
-                     showline=True,
-                     linewidth=10
-                     )
 
-    fig.write_image(r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('example'),
-                    scale=0.47)
+    fig.add_trace(go.Scatter(
+        x=x, y=y1,
+        mode='markers',
+        marker=dict(
+            size=35,
+            line=dict(width=5, color='DarkSlateGrey'),
+            color='LightSkyBlue',
+            opacity=0.8,
+            symbol='square-dot'),
+        opacity=0.9,
+    ))
+
+    fig.update_layout(
+        width=1360,
+        height=710,
+        template=docs_theme,
+        hovermode='closest',
+    )
+
+    fig.update_xaxes(
+        title=dict(
+            text='Название оси Х dd',
+            font=dict(
+                family='Helvetica',
+                size=25,
+                color='grey',
+            )),
+        showspikes=True,
+        spikemode='across',
+        spikecolor='black',
+        spikethickness=10,
+        showline=True,
+        linewidth=10,
+    )
+
+    fig.write_image(
+        r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('example'),
+        scale=0.47,
+    )
 
 
 # example()
