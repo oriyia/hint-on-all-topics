@@ -136,12 +136,13 @@ def create_graph(dataframe):
     return fig
 
 
-def export_image_graph(dataframe, name):
-    graph_object = create_graph(dataframe)
-    return graph_object.write_image(r"C:\Users\Ilya\Desktop\{}.png".format(name), scale=0.47)
-
-
-export_image_graph(df1, 'graph2')
+def export_image_graph_png(fig_object, name='graph_image', export_width=None, export_height=None, export_scale=0.47):
+    fig_object.write_image(
+        r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format(name),
+        width=export_width,
+        height=export_height,
+        scale=export_scale,
+    )
 
 
 def sigmoid_graph():
@@ -183,10 +184,7 @@ def sigmoid_graph():
         title=dict(text='p'),
     )
 
-    fig.write_image(
-        r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('sigmoid_graph'),
-        scale=0.47,
-    )
+    export_image_graph_png(fig, 'sigmoid_graph')
 
 
 def logit_graph():
@@ -206,20 +204,15 @@ def logit_graph():
     )
 
     fig.update_xaxes(
-        title=dict(text='p')
+        title=dict(text='$\Large{p}$')
     )
 
     fig.update_yaxes(
         range=[-5, 5],
-        title=dict(text='logit(p)')
+        title=dict(text='$\Large{logit(p)}$')
     )
 
-    fig.write_image(
-        r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('logit_graph'),
-        width=1200,
-        height=750,
-        scale=0.47,
-    )
+    export_image_graph_png(fig, 'logit_graph', 1200, 750)
 
 
 def log_graph_other_parameter():
@@ -268,10 +261,7 @@ def log_graph_other_parameter():
         title=dict(text='p'),
     )
 
-    fig.write_image(
-        r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('log_graph_other_parameter'),
-        scale=0.47,
-    )
+    export_image_graph_png(fig, 'log_graph_other_parameter')
 
 
 def cumulative_distribution_function():
@@ -335,11 +325,7 @@ def cumulative_distribution_function():
             font_size=30),
     )
 
-    fig.write_image(
-        r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('cumulative_distribution_function'),
-        width=700,
-        scale=0.47,
-    )
+    export_image_graph_png(fig, 'cumulative_distribution_function', export_width=700)
 
 
 def distribution_function_properties():
@@ -402,19 +388,14 @@ def distribution_function_properties():
 
     fig.update_yaxes(
         title=dict(text='$\Large{F_{X}}$'),
-        range=[0.1, 1.1],
-        visible=False,
+        # range=[0.1, 1.1],
+        # visible=False,
     )
 
-    fig.write_image(
-        r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format('distribution_function_properties'),
-        width=800,
-        scale=0.47,
-    )
+    export_image_graph_png(fig, 'distribution_function_properties')
 
 
 def example():
-
     fig = go.Figure()
 
     x = [0, 1, 2]
@@ -462,8 +443,9 @@ def example():
 
 
 # example()
-# logit_graph()
+logit_graph()
 # log_graph_other_parameter()
 # sigmoid_graph()
 # cumulative_distribution_function()
-distribution_function_properties()
+# distribution_function_properties()
+# print(docs_theme.get('layout'))
