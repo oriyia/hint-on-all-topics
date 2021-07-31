@@ -136,7 +136,29 @@ def create_graph(dataframe):
     return fig
 
 
-def export_image_graph_png(fig_object, name='graph_image', export_width=None, export_height=None, export_scale=0.47):
+def plotting_points_graph(fig_object, x_coordinates, y_coordinates):
+    """Функция построения проекций точек на оси графика"""
+    for x_i, y_j in zip(x_coordinates, y_coordinates):
+        # построение вертикальной линии
+        fig_object.add_shape(
+            type='line',
+            line_dash='dash',
+            x0=x_i, x1=x_i, y0=y_j, y1=0,
+            line=dict(width=4, color='#c4c4c4'),
+            layer='below',
+        )
+        # построение горизонтальной линии
+        fig_object.add_shape(
+            type='line',
+            line_dash='dash',
+            x0=x_i, x1=0, y0=y_j, y1=y_j,
+            line=dict(width=4, color='#c4c4c4'),
+            layer='below',
+        )
+
+
+def export_image_graph_png(fig_object, name='graph_image', export_width=None, export_height=None, export_scale=0.50):
+    """Функция экспорта графика в изображение на компьютер, формат .png"""
     fig_object.write_image(
         r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format(name),
         width=export_width,
@@ -225,13 +247,13 @@ def log_graph_other_parameter():
     fig = go.Figure(go.Scatter(
         x=x_axes, y=y_axes1,
         line=dict(width=8),
-        name='beta0=10, beta=0.3'),
+        name=r'$\Large{\beta_{0}=10, \beta=0.3}$'),
     )
 
     fig.add_trace(go.Scatter(
         x=x_axes, y=y_axes2,
         line=dict(width=8),
-        name='beta0= -2, beta=0.8'),
+        name=r'$\Large{\beta_{0}= -2, \beta=0.8}$'),
     )
 
     fig.add_hline(
@@ -254,11 +276,11 @@ def log_graph_other_parameter():
     )
 
     fig.update_xaxes(
-        title=dict(text='y'),
+        title=dict(text='$\Large{y}$'),
     )
 
     fig.update_yaxes(
-        title=dict(text='p'),
+        title=dict(text='$\Large{p}$'),
     )
 
     export_image_graph_png(fig, 'log_graph_other_parameter')
@@ -334,44 +356,75 @@ def distribution_function_properties():
     y_axes = np.linspace(0.00001, 0.9999999, 100)
     x_axes = np.log(y_axes / (1 - y_axes)) + 3
 
+    # построение первой части графика
     fig = go.Figure(go.Scatter(
         x=x_axes[:30], y=y_axes[:30],
         line=dict(width=8),
     ))
 
-    fig.add_trace(go.Scatter(
-        x=x_axes[60:], y=y_axes[60:],
-        line=dict(width=8, color=theme_color[0]),
-    ))
-
-    fig.add_trace(go.Scatter(
-        x=[x_axes[60]], y=[y_axes[60]],
-        mode='markers',
-        marker=dict(size=17, color=theme_color[0]),
-    ))
-
+    # построение 2 части
     fig.add_shape(
         x0=x_axes[30], x1=x_axes[60], y0=0.5, y1=0.5,
         line=dict(width=8, color=theme_color[0]),
     )
 
+    # построение 3 части
     fig.add_trace(go.Scatter(
-        x=[x_axes[30]], y=[0.5],
+        x=x_axes[60:], y=y_axes[60:],
+        line=dict(width=8, color=theme_color[0]),
+    ))
+
+    # построение точек
+    fig.add_trace(go.Scatter(
+        x=[x_axes[60], x_axes[30]], y=[y_axes[60], 0.5],
         mode='markers',
         marker=dict(size=17, color=theme_color[0]),
     ))
 
+    # построение пользовательской оси у
+    fig.add_trace(go.Scatter(
+        mode='markers+text',
+        x=[0, 0, 0, 0, 0], y=[0, y_axes[30], y_axes[60], 1, 0.5],
+        text=[str(round(i, 2)) for i in [0, y_axes[30], y_axes[60], 1, 0.5]],
+        textposition='top left',  # (top, middle, bottom) (left, center, right)
+        textfont=dict(
+            family='Helvetica',
+            size=20,
+            color='#5c5c5c',
+        ),
+        marker=dict(
+            size=14,
+            line=dict(width=3),
+            color='#b8b8b8',
+            symbol='line-ne-open',
+        )
+    ))
+
+    # подпись пользовательской оси
+    fig.add_annotation(
+        x=-0.8, y=0.5,
+        text=r'$\huge{F_{X}(x)}$',
+        showarrow=False,
+        font=dict(
+            family='Helvetica',
+            size=14,
+            color='#5c5c5c'),
+        textangle=-90,
+    )
+
+    plotting_points_graph(fig, [x_axes[60], x_axes[30], x_axes[30]], [y_axes[60], y_axes[30], 0.5])
+
     fig.add_hline(
         y=1,
         line_dash='dash',
-        line=dict(width=5, color='#8a8a8a'),
+        line=dict(width=5, color='#c4c4c4'),
         layer='below',
     )
 
     fig.add_hline(
         y=0,
         line_dash='dash',
-        line=dict(width=5, color='#8a8a8a'),
+        line=dict(width=5, color='#c4c4c4'),
         layer='below',
     )
 
@@ -388,11 +441,133 @@ def distribution_function_properties():
 
     fig.update_yaxes(
         title=dict(text='$\Large{F_{X}}$'),
-        # range=[0.1, 1.1],
-        # visible=False,
+        range=[-0.1, 1.1],
+        visible=False,
     )
 
-    export_image_graph_png(fig, 'distribution_function_properties')
+    export_image_graph_png(fig, 'distribution_function_properties', 1000)
+
+
+def distribution_function_crv():
+    """Функция распределения для НСВ"""
+
+    x_array = np.linspace(-7, 7, 100)
+    y_array = 1 / (1 + 2.7 ** (-x_array))
+    x_array += 2
+
+    fig = go.Figure(go.Scatter(
+        x=x_array, y=y_array,
+        line=dict(width=8),
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=[x_array[40], x_array[48], x_array[55]],
+        y=[y_array[40], y_array[48], y_array[55]],
+        mode='markers',
+        marker=dict(size=20, color=theme_color[0]),
+    ))
+
+    plotting_points_graph(fig, [x_array[40], x_array[48], x_array[55]], [y_array[40], y_array[48], y_array[55]])
+
+    # добавление пользовательских осей координат
+    # ось у
+    fig.add_trace(go.Scatter(
+        x=[0, 0], y=[0, 1.1],
+        mode='lines',
+        line=dict(width=4, color='#b8b8b8'),
+    ))
+
+    # ось х
+    fig.add_trace(go.Scatter(
+        x=[-5, 9], y=[0, 0],
+        mode='lines',
+        line=dict(width=4, color='#b8b8b8')
+    ))
+
+    # создание тиков и подписей ОУ
+    fig.add_trace(go.Scatter(
+        x=[0, 0, 0, 0, 0],
+        y=[0, y_array[40], y_array[48], y_array[55], 1],
+        mode='markers+text',
+        text=['0', r'$\Large{F_{X}(x - \xi)}$', r'$\Large{F_{X}(x - \frac{\xi}{2})}$', r'$\Large{F_{X}(x)}$', '1'],
+        textposition='bottom left',
+        textfont=dict(
+            family='Helvetica',
+            size=20,
+            color='#5c5c5c'
+        ),
+        marker=dict(
+            size=14,
+            color='#b8b8b8',
+            line=dict(width=3),
+            symbol='line-ne-open',
+        )
+    ))
+
+    # создание тиков и подписей для ОХ
+    fig.add_trace(go.Scatter(
+        x=[x_array[40], x_array[48], x_array[55]],
+        y=[0, 0, 0],
+        mode='markers+text',
+        text=[r'$\Large{(x - \xi)}$', r'$\Large{(x - \frac{\xi}{2})}$', r'$\Large{(x)}$'],
+        textposition='bottom center',
+        textfont=dict(
+            family='Helvetica',
+            size=20,
+            color='#5c5c5c'
+        ),
+        marker=dict(
+            size=14,
+            color='#b8b8b8',
+            line=dict(width=3),
+            symbol='line-ne-open',
+        )
+    ))
+
+    # создание стрелок осей координат с подписями
+    fig.add_trace(go.Scatter(
+        x=[0, 9], y=[1.1, 0],
+        mode='markers+text',
+        text=[r'$\Large{F_{X}(x)}$', r'$\Large{x}$'],
+        textposition=['middle left', 'bottom center'],
+        textfont=dict(family='Helvetica',
+                      size=20,
+                      color='#5c5c5c'),
+        marker=dict(size=14,
+                    color='#b8b8b8',
+                    symbol=['triangle-up', 'triangle-right'])
+    ))
+
+    fig.add_hline(
+        y=1,
+        line_dash='dash',
+        line=dict(color='#c4c4c4',
+                  width=4),
+        layer='below',
+    )
+    fig.add_hline(
+        y=-0.15,
+        line_dash='dash',
+        line=dict(color='#c4c4c4',
+                  width=0),
+        layer='below',
+    )
+
+    fig.update_xaxes(
+        visible=False,
+    )
+
+    fig.update_yaxes(
+        visible=False,
+    )
+
+    fig.update_layout(
+        title=dict(text='<b>Функция распределения для НСВ</b>'),
+        template=docs_theme,
+        showlegend=False,
+    )
+
+    export_image_graph_png(fig, 'distribution_function_crv')
 
 
 def example():
@@ -443,9 +618,10 @@ def example():
 
 
 # example()
-logit_graph()
+# logit_graph()
 # log_graph_other_parameter()
 # sigmoid_graph()
 # cumulative_distribution_function()
 # distribution_function_properties()
+# distribution_function_crv()
 # print(docs_theme.get('layout'))

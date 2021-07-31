@@ -136,6 +136,25 @@ fig.add_trace(go.Scatter(x=x_axes, y=y_axes,
                          line=dict(width=8),
                          name='beta0= -2, beta=0.8'))
 
+# добавление тиков для оси с подписями к ним
+fig.add_trace(go.Scatter(
+            mode='markers+text',
+            x=[0, 0, 0, 0, 0], y=[0, y_axes[30], y_axes[60], 1, 0.5],
+            text=[str(round(i, 2)) for i in [0, y_axes[30], y_axes[60], 1, 0.5]],
+            textposition=['middle left', 'bottom center'],   # разные позиции для каждой точки
+            textfont=dict(
+                family='Helvetica',
+                size=20,
+                color='#5c5c5c',
+            ),
+            marker=dict(
+                size=14,
+                line=dict(width=3),
+                color='#b8b8b8',
+                symbol=['triangle-up', 'triangle-right'],  # свой символ для каждой точки
+            )
+))
+
 # точечный график
 # https://plotly.com/python/marker-style/ - посмотреть остальные типы маркера
 fig.add_trace(go.Scatter(x=x_axes, y=y_axes, mode='markers',
@@ -163,14 +182,14 @@ fig.add_hline(y=1,  # координата через которую прохо�
               annotation=dict(font=dict(family='Helvetica',
                                         size=20,
                                         color='grey')),
-              layer="below")  # слой (below - на заднем плане,
+              layer="above")  # слой (below traces - на заднем плане, above traces - на переднем плане)
 
 fig.add_shape(type='line',  # добавить линию
               x0=3, x1=10, y0=0, y1=2,
               line=dict(width=8,
                         color='grey'))
 
-fig.update_layout(title=dict(text='<b>Медианное время прохождения каждого модуля</b>',  # название графика
+fig.update_layout(title=dict(text='<b>Название графика</b>',
                              x=.5,
                              xanchor="center"),
                   showlegend=False,  # не показывать легенду
@@ -236,8 +255,10 @@ fig.add_trace(go.Scatter(
 # добавить произвольную форму с заливкой
 fig.add_trace(go.Scatter(x=[0, 1, 2, 0], y=[0.2, 0.6, 0.2, 0.2], fill="toself"))
 
+# подпись с подложкой
 fig.add_annotation(x=0, y=1,  # координаты точки для подпись
                    text="Text annotation with arrow",  # сам текст подписи
+                   textangle=45,  # угол наклона текста
                    showarrow=True,  # со стрелкой
                    font=dict(family='Helvetica',  # шрифт подписи
                              size=25,
@@ -261,3 +282,25 @@ fig.write_image(r'D:\My\Programing\Graphs\Graphs_docs\{}.png'.format('cumulative
                 width=1200,  # ширина изображения
                 height=700,  # высота изображения
                 scale=0.47)  # масштаб сохранения
+
+
+# построение проекций точек на оси графика
+def plotting_points_graph(fig_object, x_coordinates, y_coordinates):
+
+    for x_i, y_j in zip(x_coordinates, y_coordinates):
+        # построение вертикальной линии
+        fig_object.add_shape(
+            type='line',
+            line_dash='dash',
+            x0=x_i, x1=x_i, y0=y_j, y1=0,
+            line=dict(width=4, color='#c4c4c4'),
+            layer='below',
+        )
+        # построение горизонтальной линии
+        fig_object.add_shape(
+            type='line',
+            line_dash='dash',
+            x0=x_i, x1=0, y0=y_j, y1=y_j,
+            line=dict(width=4, color='#c4c4c4'),
+            layer='below',
+        )
