@@ -6,27 +6,7 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 import pandas as pd
 import plotly.graph_objs as go
-import enum
 
-df = px.data.tips()
-
-poly_model = make_pipeline(PolynomialFeatures(7), LinearRegression())
-
-rng = np.random.RandomState(1)
-x = 10 * rng.rand(50)
-x = np.sort(x)
-y = np.sin(x) + 0.1 * rng.randn(50)
-poly_model.fit(x[:, np.newaxis], y)
-y_predict = poly_model.predict(x[:, np.newaxis])
-
-df1 = pd.DataFrame({'x': x, 'y': y, 'y_predict': y_predict})
-
-import plotly.io as pio
-
-# docs_theme = go.layout.Template()
-# docs_theme.layout.annotations = [
-#
-# ]
 
 theme_color = ['#4189c3', '#41c3a9', '#1ba672', '#6b737d', '#ffad38', '#ed5e73', '#c96dd0', '#4db2ff', '#825ec2']
 
@@ -67,73 +47,6 @@ docs_theme = dict(
                      width=1367, height=617,
                      )
 )
-
-
-def create_graph(dataframe):
-    fig = go.Figure()
-
-    fig.add_trace(go.Scatter(
-        x=dataframe.x, y=dataframe.y,
-        mode='markers',
-        marker_size=12,
-    ))
-
-    fig.add_trace(go.Scatter(x=dataframe.x, y=dataframe.y_predict,
-                             line=dict(width=7)))
-
-    fig.add_trace(go.Scatter(mode="markers+text",
-                             x=[4, 8],
-                             y=[0.5, -0.5],
-                             text=["Point A", "Point B"]))
-
-    # fig.add_trace(go.Scatter(x=dataframe.x, y=dataframe.y_predict, mode='markers',
-    #                          marker_size=20,
-    #                          marker_color="lightskyblue",
-    #                          marker_line_color="midnightblue",
-    #                          marker_line_width=2,
-    #                          marker_symbol="x-dot"))
-
-    fig.update_layout(title=dict(text='<b>Полиномиальная аппроксимация нелинейной обучающей последовательности</b>'),
-                      template=docs_theme)
-
-    fig.update_xaxes(title=dict(text='Очень длинное название подписи оси Х'))
-
-    fig.update_yaxes(title=dict(text='Длинное название подписи оси У'))
-
-    # fig.update_layout(title=dict(text='<b>Полиномиальная аппроксимация нелинейной обучающей последовательности</b>',
-    #                              font=dict(size=graph_settings['title'],
-    #                                        family='Pt Sans',
-    #                                        color='#5c5c5c')),
-    #                   paper_bgcolor='#ffffff',
-    #                   plot_bgcolor='#ffffff',
-    #                   font_color='#888888',
-    #                   font_family='#888888',
-    #                   legend=dict(bordercolor='#e8e8e8',
-    #                               borderwidth=2),
-    #                   margin=dict(l=100, r=100, t=90, b=80),
-    #                   colorway=px.colors.qualitative.D3)
-    #
-    # fig.update_xaxes(title=dict(text='Подпись оси Х',
-    #                             font=dict(size=graph_settings['title_x'],
-    #                                       family='Pt Sans',
-    #                                       color='#888888')),
-    #                  tickfont=dict(family='Arial',
-    #                                color='#888888',
-    #                                size=graph_settings['tick_x']),
-    #                  gridcolor='#d9d9d9',
-    #                  zerolinewidth=3, zerolinecolor='#858585')
-    #
-    # fig.update_yaxes(title=dict(text='Подпись оси У',
-    #                             font=dict(size=graph_settings['title_y'],
-    #                                       family='Pt Sans',
-    #                                       color='#888888')),
-    #                  tickfont=dict(family='Arial',
-    #                                color='#888888',
-    #                                size=graph_settings['tick_y']),
-    #                  gridcolor='#d9d9d9',
-    #                  zerolinewidth=3, zerolinecolor='#858585')
-    # offline.plot(fig)
-    return fig
 
 
 def plotting_points_graph(fig_object, x_coordinates, y_coordinates):
@@ -567,7 +480,11 @@ def distribution_function_crv():
         showlegend=False,
     )
 
-    export_image_graph_png(fig, 'distribution_function_crv')
+    export_image_graph_png(fig, 'distribution_function_crv', 1200)
+
+
+def probability_density_function():
+    from scipy import Er
 
 
 def example():
@@ -623,5 +540,5 @@ def example():
 # sigmoid_graph()
 # cumulative_distribution_function()
 # distribution_function_properties()
-# distribution_function_crv()
-# print(docs_theme.get('layout'))
+distribution_function_crv()
+

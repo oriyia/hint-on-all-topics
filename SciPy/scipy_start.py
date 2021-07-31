@@ -36,37 +36,8 @@ gamma_distribution = gamma(lambda_g, 0, k)  # 0 - это смещение
 pdf = gamma_distribution.pdf(x)  # значения функции плотности вероятности
 # sample = gamma_distribution.rvs(size=5)  # значения значения плотности вероятности (5 штук)
 # stats = gamma_distribution.stats(1) ТАК А КАКИЕ ТАМ ЕЩЕ ЕСТЬ АРГУМЕНТЫ
-df = pd.DataFrame({'x': x, 'y': pdf})
-fig = px.line(df, x=x, y='y',
-              template='plotly_white',
-              color_discrete_sequence=px.colors.sequential.Plasma)
-fig.update_layout(title=dict(text='<b>График функции плотности вероятности</b>',
-                             x=.5,
-                             xanchor="center",
-                             font=dict(size=30,
-                                       family='Arial',
-                                       color='#888888')),  # название графика
-                  showlegend=False)
-fig.update_xaxes(range=[0, 10],
-                 title=dict(text='t',
-                            font=dict(size=25,
-                                      family='Arial',
-                                      color='#888888')),
-                 tickfont=dict(family='Arial',
-                               color='#888888',
-                               size=14),
-                 gridcolor='#dbdbdb',
-                 zerolinewidth=2, zerolinecolor='#c3c3c3')
-fig.update_yaxes(title=dict(text='f(t|λ,k)',
-                            font=dict(size=25,
-                                      family='Arial',
-                                      color='#888888')),
-                 tickfont=dict(family='Arial',
-                               color='#888888',
-                               size=14),
-                 gridcolor='#dbdbdb',
-                 zerolinewidth=2, zerolinecolor='#c3c3c3')
-fig.show()
+
+
 # ПРИМЕР С ОБУЧЕНИЕМ
 # df = pd.read_csv('OnlineRetail.csv')
 # df = df[(df.UnitPrice > 0) & (df.Quantity > 0)]

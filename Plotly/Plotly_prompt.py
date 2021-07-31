@@ -155,7 +155,7 @@ fig.add_trace(go.Scatter(
             )
 ))
 
-# точечный график
+# маркеры (настройка стиля)
 # https://plotly.com/python/marker-style/ - посмотреть остальные типы маркера
 fig.add_trace(go.Scatter(x=x_axes, y=y_axes, mode='markers',
                          marker=dict(size=35,  # размер маркера
