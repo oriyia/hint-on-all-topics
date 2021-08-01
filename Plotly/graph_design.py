@@ -1,9 +1,6 @@
 import plotly.express as px
 import plotly.offline as offline
 import numpy as np
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import PolynomialFeatures
-from sklearn.linear_model import LinearRegression
 import pandas as pd
 import plotly.graph_objs as go
 
@@ -70,7 +67,7 @@ def plotting_points_graph(fig_object, x_coordinates, y_coordinates):
         )
 
 
-def export_image_graph_png(fig_object, name='graph_image', export_width=None, export_height=None, export_scale=0.50):
+def export_image_graph_png(fig_object, name='graph_image', export_width=None, export_height=None, export_scale=0.49):
     """Функция экспорта графика в изображение на компьютер, формат .png"""
     fig_object.write_image(
         r"D:\My\Programing\Graphs\Graphs_docs\{}.png".format(name),
@@ -484,7 +481,201 @@ def distribution_function_crv():
 
 
 def probability_density_function():
-    from scipy import Er
+    """График плотности вероятности"""
+
+    from scipy.stats import gamma
+    lambda_g = 2
+    k = 1
+    x_axes = np.linspace(0, 6, 200)
+    gamma_distribution = gamma(lambda_g, 0, k)
+    pdf = gamma_distribution.pdf(x_axes)
+
+    fig = go.Figure(go.Scatter(
+        x=x_axes, y=pdf,
+        mode='lines',
+        line=dict(width=8)
+    ))
+
+    # подпись выделенной интегрированной области
+    fig.add_annotation(
+        x=2, y=0.15,
+        text=r"$\Huge{P(a\leq X\leq b)=\int_a^b f_{X}(\xi)d\xi}$",
+        ax=400, ay=-100,
+        arrowwidth=3,
+        arrowsize=1,
+        arrowhead=5,
+        arrowcolor='#757575',
+    )
+
+    # выделенная область интегрирования
+    fig.add_trace(go.Scatter(
+        x=x_axes[40:80],
+        y=pdf[40:80],
+        line=dict(width=8, color=theme_color[0]),
+        fill='tozeroy',
+    ))
+
+    # тики по оси у выделенной области
+    fig.add_trace(go.Scatter(
+        x=[x_axes[40], x_axes[79]], y=[0, 0],
+        mode='markers+text',
+        text=[r'$\huge{a}$', r'$\huge{b}$'],
+        textposition='bottom center',
+        marker=dict(
+            size=20,
+            line=dict(width=4),
+            color='#b8b8b8',
+            symbol='line-ns-open',
+        ),
+    ))
+
+    fig.update_layout(
+        title=dict(text='<b>График плотности вероятности</b>'),
+        template=docs_theme,
+        showlegend=False,
+    )
+
+    fig.update_xaxes(
+        title=dict(text=r'$\Large{x}$')
+    )
+
+    fig.update_yaxes(
+        title=dict(text=r'$\Large{f_{X}(x)}$')
+    )
+
+    export_image_graph_png(fig, 'probability_density_function', 1100, 530)
+
+
+def probability_density_function2():
+
+    from scipy.stats import gamma
+
+    lambda_g = 4
+    k = 1
+    x_axes = np.linspace(-1 , 9, 200)
+    gamma_distribution = gamma(lambda_g, 0, k)
+    y_axes = gamma_distribution.pdf(x_axes)
+
+    fig = go.Figure(go.Scatter(
+        x=x_axes, y=y_axes,
+        line=dict(width=8)
+    ))
+
+    # участки интегрирования
+    fig.add_trace(go.Scatter(
+        x=x_axes[40:60], y=y_axes[40:60],
+        line=dict(color=theme_color[0]),
+        fill='tozeroy',
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=x_axes[80:90], y=y_axes[80:90],
+        line=dict(color=theme_color[0]),
+        fill='tozeroy',
+    ))
+
+    # текст со стрелкой
+    fig.add_annotation(
+        x=1.5, y=0.08,
+        text=r'$\Huge{P(X \in A)= \int_a^b f_{X}(x)dx + \int_c^d f_{X}(x)dx}$',
+        ax=560, ay=-100,
+        arrowhead=5,
+        arrowwidth=2,
+        arrowcolor='#757575',
+        bgcolor='white',
+        borderpad=4,
+        borderwidth=2,
+        bordercolor='#c2c2c2',
+    )
+
+    # вторая стрелка
+    fig.add_annotation(
+        x=3.2, y=0.08,
+        text='',
+        ax=230, ay=-74,
+        arrowhead=5,
+        arrowcolor='#757575',
+    )
+
+    fig.add_trace(go.Scatter(
+        x=[x_axes[40], x_axes[59], x_axes[80], x_axes[89]], y=[0, 0, 0, 0],
+        mode='markers+text',
+        text=[r'$\huge{a}$', r'$\huge{b}$', r'$\huge{c}$', r'$\huge{d}$',],
+        textposition='bottom center',
+        marker=dict(
+            size=20,
+            color='#b8b8b8',
+            line=dict(width=4),
+            symbol='line-ns-open',
+        )
+    ))
+
+    fig.update_xaxes(
+        title=dict(text=r'$\Large{x}$'),
+        range=[0, 9]
+    )
+
+    fig.update_yaxes(
+        title=dict(text=r'$\Large{f_{X}(x)}$'),
+        range=[-0.05, 0.25],
+    )
+
+    fig.update_layout(
+        title=dict(text='<b>Плотность вероятности для нескольких участков</b>'),
+        template=docs_theme,
+        showlegend=False,
+    )
+
+    export_image_graph_png(fig, 'probability_density_function2', 1100, 530)
+
+
+def stochastic_dominance():
+
+    x_axes = np.linspace(-9, 9, 100)
+    y_axes = 1 / (1 + 2.7 ** (-x_axes))
+    x_axes1 = x_axes + 3
+    x_axes2 = x_axes + 6
+
+    fig = go.Figure(go.Scatter(
+        x=x_axes1, y=y_axes,
+        mode='lines',
+        line=dict(width=8),
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=x_axes2, y=y_axes,
+        mode='lines',
+        line=dict(width=8)
+    ))
+
+    # подписи графиков со стрелками
+    fig.add_annotation(
+        x=3, y=0.58,
+        text=r'$\Huge{F_{Y}(\xi)}$',
+        arrowhead=5,
+        arrowcolor='#757575',
+        ax=-50, ay=-59,
+    )
+
+    fig.add_annotation(
+        x=6, y=0.4,
+        text=r'$\Huge{F_{X  }(\xi)}$',
+        arrowhead=5,
+        arrowcolor='#757575',
+        ax=50, ay=59,
+    )
+
+    fig.update_layout(
+        template=docs_theme,
+        showlegend=False,
+    )
+
+    fig.update_xaxes(
+        title=dict(text=r'$\Large{\xi}$'),
+        range=[-3, 11],
+    )
+
+    export_image_graph_png(fig, 'stochastic_dominance', 1100)
 
 
 def example():
@@ -540,5 +731,7 @@ def example():
 # sigmoid_graph()
 # cumulative_distribution_function()
 # distribution_function_properties()
-distribution_function_crv()
-
+# distribution_function_crv()
+# probability_density_function(
+# probability_density_function2()
+# stochastic_dominance()
