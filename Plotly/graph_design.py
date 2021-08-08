@@ -3,6 +3,7 @@ import plotly.offline as offline
 import numpy as np
 import pandas as pd
 import plotly.graph_objs as go
+from plotly.subplots import make_subplots
 
 
 theme_color = ['#4189c3', '#41c3a9', '#1ba672', '#6b737d', '#ffad38', '#ed5e73', '#c96dd0', '#4db2ff', '#825ec2']
@@ -678,6 +679,212 @@ def stochastic_dominance():
     export_image_graph_png(fig, 'stochastic_dominance', 1100)
 
 
+def likelihood_sample():
+    """График правдоподобности выборки"""
+
+    # задание распределения
+    from scipy.stats import norm
+    x_axes1 = np.linspace(-14, 26, 100)
+    # Mean = 0, SD = 2.
+    pdf1 = norm(6, 2).pdf(x_axes1)
+    marker_x = [5.2, 7, 8.2]
+    markers_pdf1 = norm(6, 2).pdf(marker_x)
+    pdf2 = norm(8, 2).pdf(x_axes1)
+    markers_pdf2 = norm(8, 2).pdf(marker_x)
+
+    # для дальнейшего легкого выбора точек
+    # df_axes = pd.DataFrame({'x_axes1': x_axes1, 'x_axes2': x_axes2, 'pdf': pdf})
+
+    fig = go.Figure()
+
+    fig = make_subplots(
+        rows=2, cols=1,
+        vertical_spacing=0.02,
+    )
+
+    fig.add_trace(go.Scatter(
+        x=x_axes1, y=pdf1,
+        mode='lines',
+        line=dict(width=8),
+    ), 1, 1)
+
+    fig.add_trace(go.Scatter(
+        x=x_axes1, y=pdf2,
+        mode='lines',
+        line=dict(width=8),
+    ), 2, 1)
+
+    # добавление пользовательских осей координат
+    fig.add_shape(
+        type='line',
+        x0=0, x1=0, y0=-0.01, y1=0.2,
+        line=dict(width=4, color='#b8b8b8'),
+        row=2, col=1,
+        layer='below',
+    )
+
+    fig.add_shape(
+        type='line',
+        x0=0, x1=0, y0=-0.01, y1=0.2,
+        line=dict(width=4, color='#b8b8b8'),
+        row=1, col=1,
+        layer='below',
+    )
+
+    fig.add_shape(
+        type='line',
+        x0=-2, x1=16, y0=0, y1=0,
+        line=dict(width=4, color='#b8b8b8'),
+        row=2, col=1,
+        layer='below',
+    )
+
+    fig.add_shape(
+        type='line',
+        x0=-2, x1=16, y0=0, y1=0,
+        line=dict(width=4, color='#b8b8b8'),
+        row=1, col=1,
+        layer='below',
+    )
+
+    # добавление стрелки для пользовательской оси координат,
+    fig.add_trace(go.Scatter(
+        x=[0], y=[0.2],
+        mode='markers',
+        marker=dict(
+            size=16,
+            line=dict(width=0),
+            color='#b8b8b8',
+            symbol='triangle-up',
+        )
+    ), 1, 1)
+
+    fig.add_trace(go.Scatter(
+        x=[0], y=[0.2],
+        mode='markers+text',
+        marker=dict(
+            size=16,
+            line=dict(width=0),
+            color='#b8b8b8',
+            symbol='triangle-up',
+        )
+    ), 2, 1)
+
+    # добавление подписей для графиков
+    fig.add_annotation(
+        x=2, y=0.15,
+        text=r'$\huge{p_{0}(x|H_{0})}$',
+        showarrow=False,
+        font=dict(
+            family='Helvetica',
+            size=23,
+            color='#5c5c5c'
+        ),
+        ax=0, ay=0,
+        bordercolor="#c2c2c2",  # цвет рамки
+        borderwidth=2,  # толщина рамки
+        borderpad=9,  # расстояние от текста до рамки
+        bgcolor="white",  # цвет подложки
+        row=1, col=1,
+    )
+
+    fig.add_annotation(
+        x=2, y=0.15,
+        text=r'$\huge{p_{1}(x|H_{1})}$',
+        showarrow=False,
+        font=dict(
+            family='Helvetica',
+            size=23,
+            color='#5c5c5c'
+        ),
+        ax=0, ay=0,
+        bordercolor="#c2c2c2",  # цвет рамки
+        borderwidth=2,  # толщина рамки
+        borderpad=9,  # расстояние от текста до рамки
+        bgcolor="white",  # цвет подложки
+        row=2, col=1,
+    )
+
+    # добавление рассматриваемых точек
+    fig.add_trace(go.Scatter(
+        x=marker_x,
+        y=markers_pdf1,
+        mode='markers',
+        marker=dict(
+            size=16,
+            line=dict(width=5, color=theme_color[0]),
+            color='white',
+        )
+    ), 1, 1)
+    
+    fig.add_trace(go.Scatter(
+        x=marker_x,
+        y=markers_pdf2,
+        mode='markers',
+        marker=dict(
+            size=16,
+            line=dict(width=5, color=theme_color[1]),
+            color='white',
+        )
+    ), 2, 1)
+
+    # добавление горизонтальных пунктирных линий
+    for x, y in zip(marker_x, markers_pdf1):
+        fig.add_shape(
+            x0=x, y0=y, x1=x, y1=0,
+            line_dash='dash',
+            line=dict(width=4, color='#c4c4c4'),
+            layer='below'
+        )
+
+    for x, y in zip(marker_x, [0.21, 0.21, 0.21,]):
+        fig.add_shape(
+            x0=x, y0=y, x1=x, y1=0,
+            line_dash='dash',
+            line=dict(width=4, color='#c4c4c4'),
+            layer='below',
+            row=2, col=1,
+        )
+
+    # добавление подписи тиков
+    fig.add_trace(go.Scatter(
+        x=marker_x, y=[0, 0, 0],
+        mode='markers+text',
+        text=[r'$\huge{x_{i}}$', r'$\huge{x_{i+1}}$', r'$\huge  {x_{i+2}}$'],
+        textposition='bottom center',
+        marker=dict(
+            line=dict(width=4),
+            size=13,
+            color='#b8b8b8',
+            symbol='line-ns-open',
+        ),
+        textfont=dict(
+            size=23,
+            color='#5c5c5c',
+        ),
+    ))
+
+    fig.update_layout(
+        title=dict(text='<b>Правдоподобность выборки</b>'),
+        template=docs_theme,
+        showlegend=False,
+    )
+
+    fig.update_xaxes(
+        range=[-1, 18],
+        showticklabels=False,
+        # visible=False,
+    )
+
+    fig.update_yaxes(
+        # visible=False,
+        showticklabels=False,
+        range=[-0.03, 0.21],
+    )
+
+    export_image_graph_png(fig, 'likelihood_sample', export_height=800)
+
+
 def example():
     fig = go.Figure()
 
@@ -735,3 +942,4 @@ def example():
 # probability_density_function(
 # probability_density_function2()
 # stochastic_dominance()
+likelihood_sample()

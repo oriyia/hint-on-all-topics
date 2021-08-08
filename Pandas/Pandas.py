@@ -126,7 +126,9 @@ import datetime
 # table[table.Population > 2].all() - все ли элементы True
 # table[table.Population > 2].any() - есть ли хоть элемент True (т.е. больше 2-х)
 # table[table.Population > 2].sum() - сумма элементов больших 2-х
-# table[(~table.Population.isin([2, 3])) & (и что-то еще)] - условие где не равно 2, 3
+# table[(table.Population.isin([2, 3])) & (и что-то еще)] - условие где не равно 2, 3
+# table.loc[table.Population.isin([1, 2, 3]), ['Население']]  # вывод столбца "Население", с условием что в значение в
+# столбе "Population равно одному из значений списка"
 
 
 # ИНФОРМАЦИЯ ПО DATAFRAME

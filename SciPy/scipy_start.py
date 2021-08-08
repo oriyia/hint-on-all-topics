@@ -34,7 +34,7 @@ x = np.linspace(0, 30, 200)  # задаем СВ Х
 gamma_distribution = gamma(lambda_g, 0, k)  # 0 - это смещение
 # mean = gamma_distribution.mean()  # вывод (также std,
 pdf = gamma_distribution.pdf(x)  # значения функции плотности вероятности
-# sample = gamma_distribution.rvs(size=5)  # значения значения плотности вероятности (5 штук)
+# sample = gamma_distribution.rvs(size=5)  # значения плотности вероятности (5 штук)
 # stats = gamma_distribution.stats(1) ТАК А КАКИЕ ТАМ ЕЩЕ ЕСТЬ АРГУМЕНТЫ
 
 
@@ -229,7 +229,7 @@ right = np.quantile(x_boot_m, 1 - alpha/2)
 # left = theta_hat - np.quantile(x_boot_t, 1 - alpha/2) * std_hat
 # right = theta_hat - np.quantile(x_boot_t, alpha/2) * std_hat
 
-# доверительный интервал для разницы мужду двумя выборками (по Эфрону)
+# доверительный интервал для разницы между двумя выборками (по Эфрону)
 # def stat_intervals(boot, alpha=0.05):
 #     left = np.quantile(boot, alpha/2)
 #     right = np.quantile(boot, 1 - alpha/2)

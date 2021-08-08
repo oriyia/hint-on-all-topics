@@ -16,10 +16,13 @@ fig = go.Figure()  # создание поля для графиков
 # распределение графиков по областям поля
 fig = make_subplots(
     rows=3, cols=2,  # задание количества строк и столбцов
-    subplot_titles=('Plot1', 'Plot2', 'Plot3', 'Plot4'),
-    specs=[[{'rowspan': 3}, {}], [None, {}], [None, {}]])
-# column_widths=[2, 1] задание отношения между графиками по строке, row_heights= столбцы
-# specs=[[{"colspan": 2}, None], [{}, {}]]) для объединения по строке
+    subplot_titles=('Plot1', 'Plot2', 'Plot3', 'Plot4'),  # название для каждого графика
+    specs=[[{'rowspan': 3}, {}], [None, {}], [None, {}]],  # расположение каждого графика на сетке
+    vertical_spacing=0.02,  # расстояние между графиками по вертикали
+    horizontal_spacing=0.03,  # расстояние между графиками по горизонтали
+    column_widths=[2, 1],  # размерное отношение между графиками по строке
+    row_heights=[3, 2, 1],  # размерное отношение между графиками по столбцу
+)
 
 # настройка оси для определенного графика поля
 fig.update_yaxes(
@@ -219,7 +222,7 @@ fig.add_trace(go.Scatter(
 fig.add_hline(
     y=1,  # координата через которую проходит линия
     line_dash='dash',  # тип линии (dash - пунктирная, dot - точки
-    line=dict(color='#8a8a8a',
+    line=dict(color='#c4c4c4',
               width=5),
     annotation_text='Подпись линии',
     annotation_position='bottom right',  # положение подписи
@@ -253,7 +256,7 @@ fig.update_xaxes(
     tickfont=dict(family='Helvetica',
                   size=15,  # размер тиков
                   color='grey'),
-    showticklabels=True,  # показать все тики для express
+    showticklabels=True,  # показать все тики для (False - не показывать тики)
     ticksuffix=' дн.',  # суффикс у тиков оси
     tickprefix="$",  # приставка у тиков оси
     title=dict(text='$\Large{F_{X}}$',  # подпись оси x в Latex (\large{}, \Large{}, \huge{}, \Huge{})
