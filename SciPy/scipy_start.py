@@ -14,17 +14,6 @@ import plotly.graph_objs as go
 pd.set_option('display.max_columns', 14)
 
 
-# задание нормального распределения
-np.random.seed(0)  # - для какой-то там нормализации
-x_rand1 = np.random.normal(loc=0, scale=1, size=1000)
-x_rand2 = np.random.normal(loc=0, scale=1, size=1000) + 0.5
-# Группировка данных вместе
-hist_data = [x_rand1, x_rand2]  # для нормальной работы, когда одна СВ. Список списков
-# Задание цвета
-colors_x3 = ['#835AF1', '#7FA6EE', '#B8F7D4']
-colors_x2 = ['#835AF1', '#7FA6EE']
-
-
 """РАСПРЕДЕЛЕНИЯ"""
 
 
@@ -63,9 +52,6 @@ def gamma_distribution():
 # fig.add_scatter(x=line, y=gamma(*params).pdf(line))
 # fig.show()
 
-# НОРМАЛЬНОЕ РАСПРЕДЕЛЕНИЕ
-from scipy.stats import norm
-# norm_distribution = norm()
 
 # ПРОВЕРКА РАСПРЕДЕЛЕНИЯ НА НОРМАЛЬНОСТЬ
 # №1 QQ-PLOT
@@ -83,26 +69,7 @@ from scipy.stats import norm
 # print(shapiro_test)  # ShapiroResult(statistic=0.9960623383522034, pvalue=8.162489641544413e-16)
 
 
-def create_histogram():
-    fig = px.histogram(x_rand1,
-                       nbins=100,  # количество разбиений
-                       histnorm='probability density',  # тип нормализации гистограммы (здесь плотность вероятности)
-                       cumulative=True,  # кумулятивная функция
-                       opacity=0.8,  # насыщенность графика
-                       marginal='box')  # дополнительное частотное распределение возле графика (rug - насечки)
-    return fig
 
-
-def create_distplot():
-    fig = ff.create_distplot(hist_data,
-                             ['name_group1', 'name_group2'],
-                             colors=colors_x2,  # изменение цвета графика
-                             curve_type='normal',  # тип изгиба кривой (kde=true)
-                             # show_hist=False,  # не показывать гистограмму
-                             # show_curve=False,  # не показывать кривую
-                             show_rug=False,
-                             bin_size=[.1, .6])  # количество разбиений, для каждой группы отдельно
-    return fig
 
 
 """-----------------------------------------------------------------------------------------"""

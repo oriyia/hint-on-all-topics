@@ -378,3 +378,31 @@ def plotting_points_graph(fig_object, x_coordinates, y_coordinates):
             line=dict(width=4, color='#c4c4c4'),
             layer='below',
         )
+
+
+def create_histogram_graph():
+    """Гистограмма"""
+    fig = px.histogram(
+        x_axes,
+        nbins=100,  # количество разбиений
+        histnorm='probability density',  # тип нормализации гистограммы (здесь плотность вероятности)
+        cumulative=True,  # кумулятивная функция
+        opacity=0.8,  # насыщенность графика
+        marginal='box',  # дополнительное частотное распределение возле графика (rug - насечки)
+    )
+    return fig
+
+
+def create_distplot_graph():
+    """График распределения"""
+    import plotly.figure_factory as ff
+    fig = ff.create_distplot(
+        x_axes,
+        ['name_group1', 'name_group2'],
+        colors='название столбца',  # изменение цвета графика
+        curve_type='normal',  # тип изгиба кривой (kde=true)
+        show_hist=False,  # не показывать гистограмму
+        show_curve=False,  # не показывать кривую
+        show_rug=False,
+        bin_size=[.1, .6])  # количество разбиений, для каждой группы отдельно
+    return fig
