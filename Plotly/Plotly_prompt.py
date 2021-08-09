@@ -26,79 +26,16 @@ fig = make_subplots(
 
 # настройка оси для определенного графика поля
 fig.update_yaxes(
+    title=dict(text='Название графика'),
     range=[-0.5, 5],
     zerolinecolor='LightPink',
-    col=2,  # указываем столбец
+    col=2, row=1,  # указываем столбец
 )
 
-fig.update_xaxes(
-    range=[-0.5, 5],
-    zerolinecolor='#000',
-    col=2,
-)
-
-fig.add_trace(go.Scatter(x=x_axes, y=y_axes, name='f(x)=x<sup>2</sup>', mode='lines+markers'), 1, 2)
-fig.add_trace(go.Scatter(x=x_axes, y=y_axes, name='f(x)=0.5x', mode='lines+markers',
-                         marker=dict(color=x_axes, colorbar=dict(title='f(x)=x'),
-                                     colorscale='Inferno', size=10*t(x))), 2, 2)
-
+# настройка расположения на соответственном поле
 fig.add_trace(go.Scatter(
-    x=x, y=x,
-    name='g(x)=x',
-    mode='markers',
-    marker=dict(
-        color='LightSkyBlue',
-        size=10,
-        line=dict(color='MediumPurple', width=2))
+    x=x_axes, y=y_axes,
 ), 1, 2)
-
-fig.add_trace(go.Scatter(x=x, y=h(x), name='h(x)=sin(x)'), 3, 2)
-
-fig.add_trace(go.Scatter(x=x, y=g(x), name='g(x)=cos(x)'), 3, 2)
-
-fig.add_trace(go.Scatter(
-    x=x, y=j(x),
-    visible='legendonly',  # неактивна функция, скрыта
-    name='j(x)=tg(x)'
-))
-
-fig.add_trace(go.Scatter(
-    x=x, y=j(x),
-    name='j(x)=tg(x)'
-),
-    1, 1)
-
-fig.update_layout(
-    legend_orientation="h",  # внизу располагается легенда
-    legend=dict(x=.5, xanchor="center"),  # выравнивание легенды (по центру)
-    hovermode='x',  # при наведении на один график, данные отображаются и по второму (по иксу)
-)
-
-fig.update_xaxes(
-    title='Ось Х графика 1',  # подписывание осей конкретного графика
-    col=1, row=1
-)
-
-fig.update_xaxes(
-    title='Ось Х графика 2',
-    col=2, row=1
-)
-
-fig.update_yaxes(
-    title='Ось Y графика 1',
-    col=1, row=1
-)
-
-fig.update_yaxes(
-    title='Ось Y графика 2',
-    col=2, row=1
-)
-
-fig.update_traces(
-    hoverinfo='all',
-    hovertemplate='Аргумент: %{x}<br>Функция: %{y}'
-)
-
 
 # шаблон цветовой палитры
 theme_color = ['#4189c3', '#41c3a9', '#1ba672', '#6b737d', '#ffad38', '#ed5e73', '#c96dd0', '#4db2ff', '#825ec2']
@@ -163,6 +100,12 @@ fig = px.line(
     facet_row_spacing=0.025,  # расстояние между графиками по вертикали
 )
 
+"""Добавить невидимую функцию с легендой"""
+fig.add_trace(go.Scatter(
+    x=x_axes, y=y_axes,
+    visible='legendonly',  # неактивна функция, скрыта
+))
+
 # просто добавить фигуру c подписями точек
 fig.add_trace(go.Scatter(
     x=x_axes, y=y_axes,
@@ -210,7 +153,8 @@ fig.add_trace(go.Scatter(
     opacity=0.9,
 ))
 
-# подпись точек на графике
+
+"""Подпись точек на графике"""
 fig.add_trace(go.Scatter(
     mode="markers+text",
     x=[4, 8],
@@ -218,7 +162,8 @@ fig.add_trace(go.Scatter(
     text=["Point A", "Point B"],
 ))
 
-# горизонтальная линия
+
+"""Горизонтальная линия"""
 fig.add_hline(
     y=1,  # координата через которую проходит линия
     line_dash='dash',  # тип линии (dash - пунктирная, dot - точки
@@ -226,14 +171,20 @@ fig.add_hline(
               width=5),
     annotation_text='Подпись линии',
     annotation_position='bottom right',  # положение подписи
-    annotation=dict(font=dict(family='Helvetica',
-                              size=20,
-                              color='grey')),
+    annotation=dict(
+        font=dict(
+            family='Helvetica',
+            size=20,
+            color='grey',
+        ),
+    ),
     layer="above",  # слой (below traces - на заднем плане, above traces - на переднем плане)
 )
 
+
+"""Добавить произвольную линию"""
 fig.add_shape(
-    type='line',  # добавить линию
+    type='line',  # тип линии
     x0=3, x1=10, y0=0, y1=2,
     line=dict(width=8, color='grey')
 )
@@ -245,11 +196,18 @@ fig.update_layout(
         xanchor="center",
     ),
     showlegend=False,  # не показывать легенду
+    legend_orientation='h',  # расположение легенды (внизу)
+    legend=dict(
+        x=0.5,
+        xanchor='center',
+    ),
     width=1200,  # ширина изображения, но не самого графика
     height=2200,  # высота изображения
     margin=dict(l=30, r=10, t=50, b=10),
     template='название темы',  # использование темы оформления
+    hovermode='x',  # при наведении на один график, данные отображаются и по второму (по иксу)
 )
+
 
 fig.update_xaxes(
     fixedrange=True,  # размер графика по всей подложке
@@ -282,6 +240,13 @@ fig.update_yaxes(
     )
 )
 
+
+fig.update_traces(
+    hoverinfo='all',
+    hovertemplate='<b>%{y}</b><br>Курс: %{facet_row}<br>Время выполнения: %{x}<extra></extra>'
+)
+
+
 # добавить вертикальную форму
 fig.add_vrect(
     x0=0.5, x1=2,  # начало и конец
@@ -296,6 +261,7 @@ fig.add_vrect(
     line_color='grey',  # толщина обводки
 )
 
+
 # добавить овальную форму (область точек по максимуму и минимуму)
 fig.add_shape(
     type="circle",  # тип фигуры
@@ -307,6 +273,7 @@ fig.add_shape(
     line_color="blue"
 )
 
+
 # Добавить просто текст (координаты середины текста) 2 надписи в данной случае
 fig.add_trace(go.Scatter(
     x=[2, 6], y=[1, 1],
@@ -314,12 +281,14 @@ fig.add_trace(go.Scatter(
     mode="text"
 ))
 
+
 # добавить произвольную форму с заливкой (можно указать область графика)
 fig.add_trace(go.Scatter(
     x=[0, 1, 2, 0], y=[0.2, 0.6, 0.2, 0.2],
     line=dict(widht=8, color=theme_color[0]),  # определяя цвет линии, автоматически определяем цвет области
     fill="tozeroy"
 ))
+
 
 # подпись с подложкой
 fig.add_annotation(
@@ -345,9 +314,6 @@ fig.add_annotation(
     opacity=0.8,  # непрозрачность
 )
 
-fig.update_traces(
-    hovertemplate='<b>%{y}</b><br>Курс: %{facet_row}<br>Время выполнения: %{x}<extra></extra>'
-)
 
 # экспорт изображения графика в папку на компе
 fig.write_image(

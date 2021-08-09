@@ -692,9 +692,6 @@ def likelihood_sample():
     pdf2 = norm(8, 2).pdf(x_axes1)
     markers_pdf2 = norm(8, 2).pdf(marker_x)
 
-    # для дальнейшего легкого выбора точек
-    # df_axes = pd.DataFrame({'x_axes1': x_axes1, 'x_axes2': x_axes2, 'pdf': pdf})
-
     fig = go.Figure()
 
     fig = make_subplots(
