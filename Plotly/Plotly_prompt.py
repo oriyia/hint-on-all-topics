@@ -12,31 +12,6 @@ x_axes = [0, 1, 2]
 y_axes = [0, 1, 2]
 
 
-fig = go.Figure()  # создание поля для графиков
-# распределение графиков по областям поля
-fig = make_subplots(
-    rows=3, cols=2,  # задание количества строк и столбцов
-    subplot_titles=('Plot1', 'Plot2', 'Plot3', 'Plot4'),  # название для каждого графика
-    specs=[[{'rowspan': 3}, {}], [None, {}], [None, {}]],  # расположение каждого графика на сетке
-    vertical_spacing=0.02,  # расстояние между графиками по вертикали
-    horizontal_spacing=0.03,  # расстояние между графиками по горизонтали
-    column_widths=[2, 1],  # размерное отношение между графиками по строке
-    row_heights=[3, 2, 1],  # размерное отношение между графиками по столбцу
-)
-
-# настройка оси для определенного графика поля
-fig.update_yaxes(
-    title=dict(text='Название графика'),
-    range=[-0.5, 5],
-    zerolinecolor='LightPink',
-    col=2, row=1,  # указываем столбец
-)
-
-# настройка расположения на соответственном поле
-fig.add_trace(go.Scatter(
-    x=x_axes, y=y_axes,
-), 1, 2)
-
 # шаблон цветовой палитры
 theme_color = ['#4189c3', '#41c3a9', '#1ba672', '#6b737d', '#ffad38', '#ed5e73', '#c96dd0', '#4db2ff', '#825ec2']
 
@@ -87,18 +62,51 @@ docs_theme = dict(
                      margin=dict(l=100, r=10, t=90, b=120),
                      width=1367, height=617))  # 1367 617
 
-# настройки графика для режима express
-dataframe_object = pd.DataFrame()
+
+"""настройки графика для режима express"""
+df = pd.DataFrame(
+    {'a': [1, 2, 3], 'b': [4, 5, 6]}
+)
 fig = px.line(
-    dataframe_object,
-    x=module_statistics_group_count['mean'].values,
-    y=module_statistics_group_count.index.get_level_values(1),
-    facet_col=module_statistics_group_count.index.get_level_values(0),
+    df,  # указание dataframe
+    x=df.a.values,  # указание столбца
+    y=df.index.get_level_values(1),  # значения индекса (уровень 1)
+    facet_col=df.index.get_level_values(0),  # по каким данным идет разделение на разные графики
     facet_col_wrap=1,
-    labels=dict(x='Длительность', color='Курс', facet_col='Курс'),
-    color=module_statistics_group_count.index.get_level_values(0),  #
+    labels=dict(
+        x='Длительность',
+        color='Курс',
+        facet_col='Курс',
+    ),
+    color=df.index.get_level_values(0),
     facet_row_spacing=0.025,  # расстояние между графиками по вертикали
 )
+
+
+"""Создание нескольких графиков на разных зонах"""
+fig = go.Figure()  # создание поля для графиков
+# распределение графиков по областям поля
+fig = make_subplots(
+    rows=3, cols=2,  # задание количества строк и столбцов
+    subplot_titles=('Plot1', 'Plot2', 'Plot3', 'Plot4'),  # название для каждого графика
+    specs=[[{'rowspan': 3}, {}], [None, {}], [None, {}]],  # расположение каждого графика на сетке
+    vertical_spacing=0.02,  # расстояние между графиками по вертикали
+    horizontal_spacing=0.03,  # расстояние между графиками по горизонтали
+    column_widths=[2, 1],  # размерное отношение между графиками по строке
+    row_heights=[3, 2, 1],  # размерное отношение между графиками по столбцу
+)
+# настройка оси для определенного графика поля
+fig.update_yaxes(
+    title=dict(text='Название графика'),
+    range=[-0.5, 5],
+    zerolinecolor='LightPink',
+    col=2, row=1,  # указываем столбец
+)
+# настройка расположения на соответственном поле
+fig.add_trace(go.Scatter(
+    x=x_axes, y=y_axes,
+), 1, 2)
+
 
 """Добавить невидимую функцию с легендой"""
 fig.add_trace(go.Scatter(
@@ -106,7 +114,8 @@ fig.add_trace(go.Scatter(
     visible='legendonly',  # неактивна функция, скрыта
 ))
 
-# просто добавить фигуру c подписями точек
+
+"""просто добавить фигуру c подписями точек"""
 fig.add_trace(go.Scatter(
     x=x_axes, y=y_axes,
     mode='lines+text',  # lines+text - линия и подпись точек (их не видно) (markers+text,
@@ -121,7 +130,8 @@ fig.add_trace(go.Scatter(
     name='beta0= -2, beta=0.8',
 ))
 
-# добавление тиков для оси с подписями к ним
+
+"""добавление тиков для оси с подписями к ним"""
 fig.add_trace(go.Scatter(
     mode='markers+text',
     x=[0, 0, 0, 0, 0], y=[0, y_axes[30], y_axes[60], 1, 0.5],
@@ -140,16 +150,21 @@ fig.add_trace(go.Scatter(
     ),
 ))
 
-# маркеры (настройка стиля)
+
+"""Маркеры (настройка стиля)"""
 # https://plotly.com/python/marker-style/ - посмотреть остальные типы маркера
 fig.add_trace(go.Scatter(
-    x=x_axes, y=y_axes, mode='markers',
-    marker=dict(size=35,  # размер маркера
-                line=dict(width=5,  # толщина обводки
-                          color='DarkSlateGrey'),  # цвет обводки
-                color='LightSkyBlue',  # цвет маркера
-                opacity=0.8,  # непрозрачность маркера
-                symbol='square-dot'),  # тип маркера
+    x=x_axes, y=y_axes,
+    mode='markers',
+    marker=dict(
+        size=35,  # размер маркера
+        line=dict(
+            width=5,  # толщина обводки
+            color='DarkSlateGrey'),  # цвет обводки
+        color='LightSkyBlue',  # цвет маркера
+        opacity=0.8,  # непрозрачность маркера
+        symbol='square-dot',
+    ),  # тип маркера
     opacity=0.9,
 ))
 
@@ -188,6 +203,7 @@ fig.add_shape(
     x0=3, x1=10, y0=0, y1=2,
     line=dict(width=8, color='grey')
 )
+
 
 fig.update_layout(
     title=dict(
@@ -247,7 +263,7 @@ fig.update_traces(
 )
 
 
-# добавить вертикальную форму
+"""добавить вертикальную форму"""
 fig.add_vrect(
     x0=0.5, x1=2,  # начало и конец
     annotation_text="decline",  # надпись
@@ -262,7 +278,7 @@ fig.add_vrect(
 )
 
 
-# добавить овальную форму (область точек по максимуму и минимуму)
+"""добавить овальную форму (область точек по максимуму и минимуму)"""
 fig.add_shape(
     type="circle",  # тип фигуры
     xref="x", yref="y",
@@ -274,7 +290,7 @@ fig.add_shape(
 )
 
 
-# Добавить просто текст (координаты середины текста) 2 надписи в данной случае
+"""Добавить просто текст (координаты середины текста) 2 надписи в данной случае"""
 fig.add_trace(go.Scatter(
     x=[2, 6], y=[1, 1],
     text=["Line positioned relative to the plot", "Line positioned relative to the axes"],
@@ -282,7 +298,7 @@ fig.add_trace(go.Scatter(
 ))
 
 
-# добавить произвольную форму с заливкой (можно указать область графика)
+"""добавить произвольную форму с заливкой (можно указать область графика)"""
 fig.add_trace(go.Scatter(
     x=[0, 1, 2, 0], y=[0.2, 0.6, 0.2, 0.2],
     line=dict(widht=8, color=theme_color[0]),  # определяя цвет линии, автоматически определяем цвет области
@@ -290,7 +306,7 @@ fig.add_trace(go.Scatter(
 ))
 
 
-# подпись с подложкой
+"""подпись с подложкой"""
 fig.add_annotation(
     x=0, y=1,  # координаты точки для подпись
     text="Text annotation with arrow",  # сам текст подписи
@@ -315,7 +331,7 @@ fig.add_annotation(
 )
 
 
-# экспорт изображения графика в папку на компе
+"""экспорт изображения графика в папку на компе"""
 fig.write_image(
     r'D:\My\Programing\Graphs\Graphs_docs\{}.png'.format('graph_name'),
     width=1200,  # ширина изображения
@@ -324,7 +340,7 @@ fig.write_image(
 )
 
 
-# построение проекций точек на оси графика
+"""построение проекций точек на оси графика"""
 def plotting_points_graph(fig_object, x_coordinates, y_coordinates):
 
     for x_i, y_j in zip(x_coordinates, y_coordinates):
