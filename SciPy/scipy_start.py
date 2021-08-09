@@ -25,17 +25,30 @@ colors_x3 = ['#835AF1', '#7FA6EE', '#B8F7D4']
 colors_x2 = ['#835AF1', '#7FA6EE']
 
 
-# РАСПРЕДЕЛЕНИЯ
-# ГАММА РАСПРЕДЕЛЕНИЕ
-from scipy.stats import gamma
-lambda_g = 5
-k = 1
-x = np.linspace(0, 30, 200)  # задаем СВ Х
-gamma_distribution = gamma(lambda_g, 0, k)  # 0 - это смещение
-# mean = gamma_distribution.mean()  # вывод (также std,
-pdf = gamma_distribution.pdf(x)  # значения функции плотности вероятности
-# sample = gamma_distribution.rvs(size=5)  # значения плотности вероятности (5 штук)
-# stats = gamma_distribution.stats(1) ТАК А КАКИЕ ТАМ ЕЩЕ ЕСТЬ АРГУМЕНТЫ
+"""РАСПРЕДЕЛЕНИЯ"""
+
+
+def norm_distribution():
+    """Нормальное распределение"""
+    from scipy.stats import norm
+    x_axes = np.linspace(-14, 26, 100)  # задание значений для НСВ
+    pdf = norm(6, 2).pdf(x_axes)  # вычисление плотности вероятности для Х (6 - mean, 2 - SD)
+    marker_x = [5.2, 7, 8.2]  # какие значения НСВ необходимы
+    markers_pdf = norm(6, 2).pdf(marker_x)  # значения плотности вероятности для отдельных значений Х
+
+
+def gamma_distribution():
+    """Гамма распределение"""
+    from scipy.stats import gamma
+    # Задание параметров распределения
+    lambda_g = 5
+    k = 1
+    x_axes = np.linspace(0, 30, 200)  # задаем НСВ Х
+    gamma_model = gamma(lambda_g, 0, k)  # 0 - это смещение
+    mean = gamma_model.mean()  # вывод (также std,
+    pdf = gamma_model.pdf(x_axes)  # значения функции плотности вероятности
+    sample = gamma_model.rvs(size=5)  # значения плотности вероятности (5 случайных штук)
+    stats = gamma_model.stats(1)  # посмотреть, а какие есть еще аргументы
 
 
 # ПРИМЕР С ОБУЧЕНИЕМ
